@@ -1,0 +1,7 @@
+#test resource class
+TestResource*
+
+#log
+*.log
+
+.DS_Store

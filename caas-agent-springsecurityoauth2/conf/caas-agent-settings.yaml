@@ -1,0 +1,10 @@
+
+caasApiUrl: "http://xxxx/api/v1"
+sslEnabled: true
+proxyEnabled: false
+proxyHost: "your http proxy host"
+proxyPort: 3182
+appCode: "your application code"
+appSecret: "your application secret"
+signEnabled: true
+

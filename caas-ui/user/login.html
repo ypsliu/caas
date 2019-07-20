@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/colorbox.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>登录</title>
+</head>
+
+<body class="gray-bg">
+    <header>
+        <div class="fl">
+            <span class="logo"><a href="/">CAAS</a></span>
+        </div>
+        <div class="fr">
+            <ul class="func" id="beforeLogin" style="display:none">
+                <li><a href="/login.html">登录</a></li>
+                <li><a href="javascript:void(0)" role="signup">注册</a></li>
+            </ul>
+            <ul class="func" id="afterLogin" style="display:none">
+                <li><a href="/app-role.html" id="apply">申请应用权限</a></li>
+                <li><a href="/profile.html">用户信息</a></li>
+                <li><a href="/change-password.html" class="v-separator">修改密码</a></li>
+                <li><a href="javascript:void(0)" id="logout">退出 <span class="glyphicon glyphicon-log-out"></span></a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4 form1">
+                <div class="page-header">
+                    <h2>CAAS帐号登录</h2>
+                </div>
+                <div class="alert alert-danger" style="display:none">
+                    <strong>登录失败!</strong> <span>用户名或密码错误。</span>
+                </div>
+                <div class="col-sm-12" id="form" style="display:none">
+                    <form name="login" method="POST" action="/api/v1/user/login">
+                        <input type="hidden" name="agent_type" value="BROWSER" />
+                        <div class="input-group top20">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <input type="text" placeholder="用户名/电话号码/邮箱" name="login_name" maxlength="50" />
+                            <span class="glyphicon glyphicon-exclamation-sign tip"></span>
+                            <div class="error-msg" validation="isNotBlank">请输入登录帐号</div>
+                        </div>
+                        <div class="input-group top20">
+                            <span class="glyphicon glyphicon-lock"></span>
+                            <input type="password" placeholder="请输入密码" name="password" maxlength="50" />
+                            <span class="glyphicon glyphicon-exclamation-sign tip"></span>
+                            <div class="error-msg" validation="isNotBlank">请输入密码</div>
+                        </div>
+                        <div class="input-group top20" style="display:none" role="vcode">
+                            <span class="glyphicon glyphicon-paperclip"></span>
+                            <input type="text" placeholder="请输入下图中验证码" name="vcode" maxlength="4" />
+                            <span class="glyphicon glyphicon-ok tip"></span>
+                            <span class="glyphicon glyphicon-exclamation-sign tip"></span>
+                            <span class="glyphicon glyphicon-remove tip"></span>
+                            <span class="checking"></span>
+                            <div class="error-msg" validation="isNotBlank">请输入验证码</div>
+                            <div class="error-msg" validation="isMatchPattern, ^[a-zA-Z0-9]{4}$">请输入正确验证码</div>
+                            <div class="error-msg" verify="true">验证码错误</div>
+                        </div>
+                        <div class="top20" style="display:none" role="vcode">
+                            <img class="captcha" width="80" />
+                            <button class="btn btn-warning btn-sm" type="button" id="refresh"><span class="glyphicon glyphicon-refresh"></span> 点击刷新</button>
+                        </div>
+                        <button class="btn btn-success center top20" disabled type="button" style="width:100%" id="login">登录</button>
+                    </form>
+                    <div class="link-area top20">
+                        <a href="javascript:void(0)" role="signup" class="small-link float-l">没有帐户，去注册？</a>
+                        <a href="/mail-validate.html" role="forgotpwd" class="small-link fr">忘记密码？</a>
+                    </div>
+
+                </div>
+                <div class="col-sm-12" style="display:none" id="username">
+                    <p class="user-name"></p>
+                    <button class="btn btn-success center top20" disabled type="button" style="width:100%" id="auth">授权</button>
+                </div>
+                <div class="col-sm-6 top30" style="display:none" id="grantArea">
+                    <p>
+                        <input type="checkbox" checked disabled="true" />&nbsp;允许访问"<span id="appName"></span>"应用下所有资源
+                    </p>
+                    <p>
+                        <input type="checkbox" id="term" checked />&nbsp;我同意<a href="javascript:void(0)">CAAS认证协议</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p class="center txt-center">Copyright &copy; 2016-2020 融数金服</p>
+        <div class="logo center top20">
+            <a href="http://www.rongcapital.cn/" target="_blank"></a>
+        </div>
+    </footer>
+    <script src="/js/lib/jquery.js"></script>
+    <script src="/js/lib/require.js"></script>
+    <script src="/js/global.js"></script>
+    <script>
+        $(window).on("load", function() {
+            require(["app/login"]);
+        });
+    </script>
+</body>
+
+</html>

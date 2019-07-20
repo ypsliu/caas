@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>CAAS管理控制台</title>
+    <link rel="stylesheet" href="/css/aui-all.css" media="all">
+    <!--[if lt IE 9]><link rel="stylesheet" href="/css/aui-ie.css" media="all"><![endif]-->
+    <!--[if IE 9]><link rel="stylesheet" href="/css/aui-ie9.css" media="all"><![endif]-->
+    <link rel="stylesheet" href="/css/jquery.jsonview.css" media="all">
+    <link rel="stylesheet" href="/css/style.css" media="all">
+    <link rel="stylesheet" href="/css/colorbox.css" media="all">
+    <script src="/js/lib/aui-all.js"></script>
+</head>
+<body>
+    <header id="header" role="banner"></header>
+    <section role="main" id="content">
+        <header class="aui-page-header" style="display:none">
+            <div class="aui-page-header-inner">
+                <div class="aui-page-header-main">
+                    <h1>CAAS管理控制台</h1>
+                </div>
+                <div class="aui-page-header-actions"></div>
+            </div>
+        </header>
+        <div class="aui-page-panel">
+            <div class="aui-page-panel-inner" style="min-height: 700px;">
+                <div class="aui-page-panel-nav" id="sideNav" style="display:none">
+                </div>
+            </div>
+        </div>
+        <footer id="footer" role="contentinfo">
+            <section class="footer-body">
+                <ul id="aui-footer-list">
+                    <li>Copyright &copy; 2016-2020 融数金服</li>
+                    <li>Version: 1.0</li>
+                </ul>
+                <div id="footer-logo"><a href="http://www.rongcapital.cn/" target="_blank">融数金服</a></div>
+            </section>
+        </footer>
+    </section>
+	<script src="/js/lib/require.js"></script>
+	<script src="/js/global.js"></script>
+	<script>
+		require(["app/index"]);
+	</script>
+</body>
+</html>

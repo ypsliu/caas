@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] [%t] [%C#%M:%L] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</root>
+	
+	<appender name="ACCESS_LOG_STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %msg%n</pattern>
+        </encoder>
+    </appender>
+	
+	<logger name="adminUserAccessLogger" level="DEBUG">
+		<appender-ref ref="ACCESS_LOG_STDOUT" />
+	</logger>
+	
+	<logger name="userAccessLogger" level="DEBUG">
+		<appender-ref ref="ACCESS_LOG_STDOUT" />
+	</logger>
+
+</configuration>

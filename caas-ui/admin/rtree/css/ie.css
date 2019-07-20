@@ -1,0 +1,18 @@
+.tool-bar .dock {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.tool-bar ul.tab-nav {
+	border-bottom: 1px solid #ccc;
+}
+
+div.overlay .form form .input-group input {
+	height: 28px;
+	border: 1px solid #ccc;
+}
+
+.tool-bar .panel div.dropdown {
+	margin-left: 0px;
+}

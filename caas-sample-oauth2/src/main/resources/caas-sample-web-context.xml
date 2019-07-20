@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+               http://www.springframework.org/schema/context
+               http://www.springframework.org/schema/context/spring-context.xsd
+               http://www.springframework.org/schema/tx
+               http://www.springframework.org/schema/tx/spring-tx.xsd
+               http://www.springframework.org/schema/aop
+               http://www.springframework.org/schema/aop/spring-aop.xsd
+               http://www.springframework.org/schema/mvc  
+               http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- jackson provider -->
+	<bean class="com.ruixue.serviceplatform.commons.web.DefaultJacksonJaxbJsonProvider"/>
+	
+	<!-- ValidatorContextResolver -->
+	<bean class="org.jboss.resteasy.plugins.validation.ValidatorContextResolver"/>
+	
+	<!-- ValidationExceptionHandler -->
+	<bean class="com.ruixue.serviceplatform.commons.web.ValidationExceptionHandler" />
+
+	<!-- global exception mapper -->
+    <!-- response status code see: javax.ws.rs.core.Response.Status -->
+	<bean class="cn.rongcapital.caas.sample.CaasSampleGlobalExceptionMapper">
+		<property name="exceptionsMap">
+            <map>
+                <entry key="java.lang.IllegalArgumentException"
+                 	value="400:400:输入参数错误"/>
+                 	
+                <entry key="com.ruixue.serviceplatform.commons.exception.InvalidParameterException"
+                 	value="400:400:输入参数错误"/>
+                 	
+                <entry key="com.ruixue.serviceplatform.commons.exception.DuplicateException"
+                 	value="400:400:输入数据已经存在了"/>
+                 	
+                <entry key="java.io.EOFException"
+                 	value="400:400:输入参数错误"/>
+                
+                <entry key="javax.ws.rs.BadRequestException"
+                 	value="400:400:输入参数错误"/>
+                 	
+                <entry key="org.codehaus.jackson.map.JsonMappingException"
+                 	value="400:400:输入参数错误"/>
+                 	
+                <entry key="org.codehaus.jackson.JsonParseException"
+                 	value="400:400:输入参数错误"/>
+                 	
+                <entry key="javax.ws.rs.NotAuthorizedException"
+                 	value="401:401:未经授权的访问"/>
+                 	
+                <entry key="javax.ws.rs.ForbiddenException"
+                 	value="403:403:访问被禁止"/>
+                 	
+                <entry key="javax.ws.rs.NotFoundException"
+                 	value="404:404:请求的资源不存在"/>
+                 	
+                <entry key="com.ruixue.serviceplatform.commons.exception.NotFoundException"
+                 	value="404:404:请求的资源不存在"/>
+                 	
+                <entry key="javax.ws.rs.NotAllowedException"
+                 	value="405:405:不被允许的HTTP方法"/>
+                 	
+                <entry key="javax.ws.rs.NotAcceptableException"
+                 	value="406:E406:状态不合法"/>
+                
+                <entry key="java.lang.IllegalStateException"
+                 	value="406:406:状态不合法"/>
+                
+                <entry key="com.ruixue.serviceplatform.commons.exception.InvalidStateException"
+                 	value="406:406:状态不合法"/>
+                 	
+                <entry key="javax.ws.rs.NotSupportedException"
+                 	value="415:415:媒体类型不被支持"/>
+                
+                <entry key="cn.rongcapital.caas.exception.InvalidParameterException"
+                 	value="200:E9011:缺少必要的参数"/>
+                <entry key="cn.rongcapital.caas.exception.InvalidSignException"
+                 	value="200:E9012:签名校验失败"/>
+                <entry key="cn.rongcapital.caas.exception.InvalidVerificationCodeException"
+                 	value="200:E9015:验证码校验失败"/>
+                <entry key="cn.rongcapital.caas.exception.LoginFailedException"
+                 	value="200:E9021:用户名或密码错误"/>
+                <entry key="cn.rongcapital.caas.exception.UserNotFoundException"
+                 	value="200:E9022:用户不存在"/>
+                <entry key="cn.rongcapital.caas.exception.InvalidUserStatusException"
+                 	value="200:E9023:用户状态不合法"/>
+                <entry key="cn.rongcapital.caas.exception.AppNotExistedException"
+                 	value="200:E9031:客户端不存在"/>
+                <entry key="cn.rongcapital.caas.exception.InvalidAppException"
+                 	value="200:E9032:客户端不合法"/>
+                <entry key="cn.rongcapital.caas.exception.InvalidAuthCodeException"
+                 	value="200:E9041:认证code不合法"/>
+                <entry key="cn.rongcapital.caas.exception.InvalidAccessTokenException"
+                 	value="200:E9051:授权token不合法"/>
+                <entry key="cn.rongcapital.caas.exception.NotAuthorizedException"
+                 	value="200:E9052:未经授权的访问"/>
+                <entry key="cn.rongcapital.caas.exception.InvalidRefreshTokenException"
+                 	value="200:E9061:刷新token不合法"/>
+                <entry key="cn.rongcapital.caas.exception.CaasExecption"
+                 	value="200:E9000:未知错误"/>
+                
+            </map>
+        </property>
+        <property name="defaultStatusCode" value="500"/>
+        <property name="defaultErrorCode" value="500"/>
+        <property name="defaultMessage" value="未知错误"/>
+	</bean>
+
+</beans>

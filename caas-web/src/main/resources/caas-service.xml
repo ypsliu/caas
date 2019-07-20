@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:cache="http://www.springframework.org/schema/cache" 
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+               http://www.springframework.org/schema/context
+               http://www.springframework.org/schema/context/spring-context.xsd
+               http://www.springframework.org/schema/tx
+               http://www.springframework.org/schema/tx/spring-tx.xsd
+               http://www.springframework.org/schema/aop
+               http://www.springframework.org/schema/aop/spring-aop.xsd
+               http://www.springframework.org/schema/cache
+               http://www.springframework.org/schema/cache/spring-cache.xsd
+               ">
+
+	<!-- date time provider -->
+	<bean id="localDatetimeProvider" class="com.ruixue.serviceplatform.commons.datetime.LocalDateTimeProvider"/>
+	
+	<!-- services -->
+	<!-- 
+	<bean id="accessLogLoggerStorageService" class="cn.rongcapital.caas.service.impl.AccessLogLoggerStorageService">
+   		<property name="adminUserLoggerName" value="${accessLog.storage.logger.loggerName.admin}"/>
+   		<property name="userLoggerName" value="${accessLog.storage.logger.loggerName.user}"/>
+   	</bean>
+   	 -->
+   	<bean id="accessLogKafkaStorageService" class="cn.rongcapital.caas.service.impl.AccessLogKafkaStorageService" 
+		init-method="start" destroy-method="stop">
+   		<property name="adminUserTopicName" value="${accessLog.storage.kafka.topicName.admin}"/>
+   		<property name="userTopicName" value="${accessLog.storage.kafka.topicName.user}"/>
+   		<property name="conf">
+			<props>
+				<prop key="bootstrap.servers">${accessLog.storage.kafka.bootstrap.servers}</prop>
+                <prop key="compression.type">snappy</prop>
+                <prop key="key.serializer">org.apache.kafka.common.serialization.StringSerializer</prop>
+                <prop key="value.serializer">org.apache.kafka.common.serialization.StringSerializer</prop>
+			</props>
+		</property>
+   	</bean>
+   	<bean id="accessLogService" class="cn.rongcapital.caas.service.impl.AccessLogServiceImpl"
+   	 	init-method="start" destroy-method="stop" >
+   		<property name="threadCount" value="${accessLog.storage.threadCount}"/>
+   		<property name="accessLogStorageServices">
+   			<set>
+   				<!-- 
+   				<ref bean="accessLogLoggerStorageService"/>
+   				 -->
+   				<ref bean="accessLogKafkaStorageService"/>
+   			</set>
+   		</property>
+   	</bean>
+   	<bean id="accessLogEsSearchService" class="cn.rongcapital.caas.service.impl.AccessLogEsSearchService" 
+   		init-method="start" destroy-method="stop">
+   		<property name="adminLogIndexName" value="${accessLog.search.es.indexName.admin}"/>
+   		<property name="userLogIndexName" value="${accessLog.search.es.indexName.user}"/>
+		<property name="clusterName" value="${accessLog.search.es.clusterName}"/>
+		<property name="hosts" value="${accessLog.search.es.hosts}"/>
+   	</bean>
+   	
+   	<!-- resources -->
+   	<bean class="cn.rongcapital.caas.web.api.UserAuthResourceImpl">
+   		<property name="sessionTimeoutInSec" value="${session.user.timeoutInSec}"/>
+   	</bean>
+    
+</beans>

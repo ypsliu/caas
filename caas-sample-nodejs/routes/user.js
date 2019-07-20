@@ -1,0 +1,16 @@
+var user = require("../modules/user.js");
+router.get("/auth", user.auth);
+router.post("/auth", user.authByPost);
+router.get("/user/info", user.info);
+router.get("/user/logout", user.logout);
+router.get("/login", user.loginInit);
+router.get("/signup", user.signupInit);
+router.get("/user/change-password", user.changePasswordInit);
+router.post("/login", user.login);
+router.post("/signup", user.signup);
+router.post("/user/change-password", user.changePassword);
+router.get("/validation/name/:name", user.validateUserName);
+router.get("/validation/email/:email", user.validateEmail);
+router.get("/validation/mobile/:mobile", user.validateMobile);
+router.get("/validation/vcode/:vcode", user.validateVcode);
+router.get("/vcode", user.base64Vcode);

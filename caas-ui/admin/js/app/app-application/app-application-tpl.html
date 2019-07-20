@@ -1,0 +1,91 @@
+<div class="login-form">
+    <h2>欢迎注册CAAS应用</h2>
+    <div class="aui-message error" style="display:none" id="error">
+        <p class="title">
+            <span class="aui-icon icon-error"></span>
+            <strong>申请失败</strong>
+        </p>
+        <p>抱歉，请重试！</p>
+    </div>
+    <form action="/admin/login" method="post" class="aui" name="login">
+        <header class="aui-page-header mt-10">
+            <div class="aui-page-header-inner">
+                <div class="aui-page-header-main">
+                    <h3>应用信息</h3>
+                </div>
+                <div class="aui-page-header-actions"></div>
+            </div>
+        </header>
+        <input type="hidden" name="userCode" value="<%=userCode%>" />
+        <fieldset>
+            <div class="field-group">
+                <label>应用名称：</label>
+                <input type="text" class="text" name="name" placeholder="请输入应用名称" maxlength="100" validation-uri="/validation/app/name/" />
+                <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+                <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+                <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+                <div class="error invalid" verify="true" style="display:none">该应用名称已经存在</div>
+                <div class="error invalid" validation="isNotBlank" style="display:none">请输入应用名称</div>
+            </div>
+            <div class="field-group">
+                <label>App Key：</label>
+                <input type="text" class="text" name="key" maxlength="150" placeholder="请输入应用Key" />
+                <input class="aui-button" type="button" value="生成" id="generateKey" />
+                <div class="error invalid" validation="isNotBlank" style="display:none">请输入应用Key</div>
+            </div>
+            <div class="field-group">
+                <label>App Secret：</label>
+                <input type="text" class="text" name="secret" maxlength="150" placeholder="请输入应用Secret" />
+                <input class="aui-button" type="button" value="生成" id="generateSecret" />
+                <div class="error invalid" validation="isNotBlank" style="display:none">请输入应用Secret</div>
+            </div>
+            <div class="field-group">
+                <label>校验签名：</label>
+                <input type="checkbox" class="mt-10" name="checkSign" value="1" />
+            </div>
+            <div class="field-group">
+                <label>校验资源权限：</label>
+                <input type="checkbox" class="mt-10" name="checkResource" value="1" />
+            </div>
+            <div class="field-group">
+                <label>用户可见：</label>
+                <input type="checkbox" class="mt-10" name="appType" value="1" />
+            </div>
+            <div class="field-group">
+                <label for="checkVcode">校验验证码</label>
+                <div>
+                    <a href="#checkVcodeDropdown" aria-owns="checkVcodeDropdown" aria-haspopup="true" class="aui-dropdown2-trigger"><span id="checkVcodeVal">无设置</span></a>
+                    <div id="checkVcodeDropdown" class="aui-dropdown2 aui-style-default aui-dropdown2-in-header">
+                        <div class="aui-dropdown2-section">
+                            <ul class="aui-list-truncate">
+                                <li><a class="checkVcodeItem" href="javascript:void(0)">无设置</a></li>
+                                <li><a class="checkVcodeItem" href="javascript:void(0)">校验</a></li>
+                                <li><a class="checkVcodeItem" href="javascript:void(0)">不校验</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="checkVcode" name="checkVcode">
+            </div>
+              <div class="field-group">
+                    <label>邮件提醒：</label>
+                    <input type="checkbox" class="mt-10" name="emailNotify"/>
+                </div>
+            <div class="field-group">
+                <label>授权超时秒数：</label>
+                <input type="text" class="text" name="tokenTimeoutSec" placeholder="请输入授权超时秒数" maxlength="20" />
+                <div class="error invalid" validation="isNotBlank" style="display:none">请输入授权超时秒数</div>
+                <div class="error invalid" validation="isMatchPattern, ^[0-9]*$" style="display:none">请输入正确的授权超时秒数</div>
+            </div>
+            <div class="field-group">
+                <label>回调地址：</label>
+                <input type="text" class="text" name="backUrl" placeholder="请输入回调地址" maxlength="150" />
+                <div class="error invalid" validation="isNotBlank" style="display:none">请输入回调地址</div>
+            </div>
+            <div class="field-group">
+                <label for="d-fname"></label>
+                <input class="aui-button aui-button-primary" type="button" value="申请应用" id="apply" />
+            </div>
+        </fieldset>
+    </form>
+</div>

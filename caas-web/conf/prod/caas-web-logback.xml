@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<configuration>
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{MM-dd HH:mm:ss.SSS} [%-5level] [%t] [%C#%M:%L] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    		<fileNamePattern>${APP_HOME}/logs/caas-web.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+    		<maxHistory>10</maxHistory>
+    	</rollingPolicy>
+    	<encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] [%t] [%C#%M:%L] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+	
+	<!-- 
+	<appender name="ACCESS_LOG_ADMIN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    		<fileNamePattern>${APP_HOME}/logs/caas-admin-access.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+    		<maxHistory>10</maxHistory>
+    	</rollingPolicy>
+    	<encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="ACCESS_LOG_USER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    		<fileNamePattern>${APP_HOME}/logs/caas-user-access.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+    		<maxHistory>10</maxHistory>
+    	</rollingPolicy>
+    	<encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <logger name="adminUserAccessLogger" level="INFO">
+		<appender-ref ref="ACCESS_LOG_ADMIN_FILE" />
+	</logger>
+	
+	<logger name="userAccessLogger" level="INFO">
+		<appender-ref ref="ACCESS_LOG_USER_FILE" />
+	</logger>
+	 -->
+	
+</configuration>

@@ -1,0 +1,36 @@
+<div class="login-form">
+    <h2>创建新资源</h2>
+    <div class="aui-message error" style="display:none" id="resCreateError">
+        <p class="title">
+            <span class="aui-icon icon-error"></span>
+            <strong id="resCreateErrorMsg">操作失败</strong>
+        </p>
+        <p>创建资源失败</p>
+    </div>
+
+<form class="aui" id="resNewForm" method="post" action="/admin/resource">
+    <input  type="hidden" name="appCode" value="<%=resource.appCode%>">
+    <div class="field-group">
+        <label for="name">资源名称 <span class="aui-icon icon-required">(required)</span></label>
+        <input class="text long-field" type="text"
+               id="name" name="name" placeholder="">
+    </div>
+    <div class="field-group">
+        <label for="identifier">资源标识 <span class="aui-icon icon-required">(required)</span></label>
+        <input class="text long-field" type="text"
+               id="identifier" name="identifier" placeholder="">
+    </div>
+
+    <div class="field-group">
+        <label for="appName">所属应用<span class="aui-icon icon-required"></span></label>
+        <input class="text long-field" type="text" disabled
+               id="appName" name="appName" placeholder="" value="<%=resource.appName%>">
+    </div>
+
+    <div class="buttons-container">
+       <span id="saveBtn"> <a href="javascript:void(0)" class="aui-button aui-button-primary">保存</a></span>   <span id="cancelBtn"> <a href="#admin/resource/list" class="aui-button aui-button-primary">取消</a></span>
+    </div>
+</form>
+</div>
+
+

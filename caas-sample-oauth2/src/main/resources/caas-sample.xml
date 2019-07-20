@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans.xsd
+               http://www.springframework.org/schema/context
+               http://www.springframework.org/schema/context/spring-context.xsd
+               http://www.springframework.org/schema/tx
+               http://www.springframework.org/schema/tx/spring-tx.xsd
+               http://www.springframework.org/schema/aop
+               http://www.springframework.org/schema/aop/spring-aop.xsd">
+               
+	<!-- configurations -->
+	<context:property-placeholder order="1" location="file:${APP_HOME}/conf/caas-sample.properties" 
+		ignore-unresolvable="true"/>
+	
+	<import resource="caas-sample-web-context.xml"/>
+	
+	<bean id="caasAgent" class="cn.rongcapital.caas.agent.CaasOauth2Agent" init-method="start" destroy-method="stop">
+		<property name="settingsYamlFile" value="${APP_HOME}/conf/caas-agent-settings.yaml"/>
+	</bean>
+	<!-- 
+	<bean class="cn.rongcapital.caas.agent.spring.processor.CaasAuthBeanPostProcessor">
+		<property name="caasAgent" ref="caasAgent"/>
+		<property name="tokenName" value="token"/>
+	</bean>
+	 -->
+	<!--  
+	<bean id="caasAuthInterceptor" class="cn.rongcapital.caas.agent.spring.interceptor.CaasAuthInterceptor">
+		<property name="caasAgent" ref="caasAgent"/>
+		<property name="tokenName" value="token"/>
+	</bean>
+	-->
+	<bean id="tokenHolder" class="cn.rongcapital.caas.agent.spring.token.HttpSessionTokenHolder" >
+		<property name="caasAgent" ref="caasAgent"/>
+	</bean>
+	<bean id="caasAuthInterceptor" class="cn.rongcapital.caas.agent.spring.interceptor.SimpleCaasAuthInterceptor">
+		<property name="caasAgent" ref="caasAgent"/>
+		<property name="tokenHolder" ref="tokenHolder"/>
+	</bean>
+	<bean id="caasAuthAnnotationAdvisor" class="cn.rongcapital.caas.agent.spring.interceptor.CaasAuthAnnotationAdvisor">
+		<constructor-arg ref="caasAuthInterceptor"/>
+	</bean>
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+	</bean>
+	<bean class="cn.rongcapital.caas.agent.spring.filter.CaasAuthFilter">
+	</bean>
+</beans>

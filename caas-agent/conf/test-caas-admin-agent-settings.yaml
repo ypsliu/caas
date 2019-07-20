@@ -1,0 +1,9 @@
+
+caasApiUrl: "http://www.caas-admin-test.com/api/v1"
+sslEnabled: false
+proxyEnabled: false
+proxyHost: "your http proxy host"
+proxyPort: 3182
+userEmail: "admin@caas.rongcapital.cn"
+password: "123456"
+appCode: "1"

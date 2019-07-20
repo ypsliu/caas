@@ -1,0 +1,76 @@
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>管理员用户列表</h1>
+        </div>
+    </div>
+</div>
+<div id="sp-table" style="margin-top:30px;">
+    <form class="aui">
+        <fieldset>
+            <div class="field-group-1">
+                <label for="name">管理员名：</label>
+                <input class="text" type="text" name="name" id="name" placeholder="请输入管理员名" role="condition" />
+            </div>
+            <div class="field-group-1">
+                <label for="email">邮箱：</label>
+                <input class="text" type="text" name="email" id="email" placeholder="请输入邮箱" role="condition" />
+            </div>
+            <div class="field-group-1">
+                <input class="button submit" type="button" value="查询" role="search" />
+            </div>
+        </fieldset>
+    </form>
+    <div class="pagination-info">
+        第<span></span>条，共<span></span>条
+    </div>
+    <table class="aui aui-table-sortable" style="display:none">
+        <thead>
+            <tr id="theader">
+                <th class="aui-table-column-issue-key">#</th>
+                <th>管理员名</th>
+                <th>邮箱</th>
+                <th>是否为超级管理员</th>
+                <th>类型</th>
+                <th>应用管理</th>
+                <th>状态</th>
+                <th>停用/启用</th>
+                <!-- <th>是否修改</th> -->
+            </tr>
+        </thead>
+        <tbody>
+        <% _.each(adminUsers, function(adminUser, i) { %>
+            <tr>
+                <td><%=i + 1%></td>
+                <td condition="name"><%=adminUser.name%></td>
+                <td condition="email"><%=adminUser.email%></td>
+                <td><%=adminUser.superUser ? "是" : "否"%></td>
+                <td><%=adminUser.userType%></td>
+                <td><a class="aui-button" href="/popup/#superadmin/admin/<%=adminUser.code%>/app" role="colorbox">应用</a></td>
+                <td><%=adminUser.enabled ? "已启用" : "已停用"%></td>
+                <td>
+                    <button  class="aui-button" name="onOff" code="<%=adminUser.code%>" id="onOff" value="<%=adminUser.enabled ? '停用' : '启用'%>"><%=adminUser.enabled ? '停用' : '启用'%></button>
+                </td>
+                <!-- <td>
+                    <%{if(adminUser.appCode)%>
+                    <a class="aui-button" href="#superadmin/admin-user/input/<%=adminUser.code%>">修改</a>
+                    <%}%>
+                </td> -->
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <ul></ul>
+    </div>
+</div>
+
+<div>
+    <a class="aui-button" href="javascript:void(0)" id="add-user">添加管理员</a>
+    <div id="add-user-buttons" style="display:none">
+        <div class="dialog-func">
+            <a class="aui-button aui-button-primary" href="/popup/#superadmin/ipa/admin/users" role="add-ipa-user">ipa用户</a>
+            <a class="aui-button aui-button-primary" href="#superadmin/admin-user/add" role="create-user">新建用户</a>
+        </div>
+    </div>
+</div>

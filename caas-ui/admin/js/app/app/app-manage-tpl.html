@@ -1,0 +1,95 @@
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>应用列表</h1>
+        </div>
+    </div>
+</div>
+    <div class="aui-message error" style="display:none" id="appQueryError">
+        <p class="title">
+            <span class="aui-icon icon-error"></span>
+            <strong>操作失败</strong>
+        </p>
+        <p>应用操作失败</p>
+    </div>
+
+<div id="sp-table" style="margin-top:30px;">
+<form class="aui">
+    <fieldset>
+        <div class="field-group-1">
+            <label for="app-name">应用名称</label>
+            <input class="text" type="text" id="app-name" name="app-name" role="condition" title="请输入应用名称">
+        </div>
+        <div class="field-group-1" role="dropdown">
+            <label for="appCode">应用状态</label>
+            <a href="javascript:void(0)" aria-owns="status" aria-haspopup="true" class="aui-button aui-dropdown2-trigger aui-style-default">查询全部</a></p>
+            <div id="status" class="aui-dropdown2 aui-style-default">
+                <ul class="aui-list-truncate">
+                    <li data-value="">
+                        <a href="javascript:void(0)">查询全部</a>
+                    </li>
+                    <li data-value="待审批">
+                        <a href="javascript:void(0)">待审批</a>
+                    </li>
+                    <li data-value="已审批">
+                        <a href="javascript:void(0)">已审批</a>
+                    </li>
+                </ul>
+            </div>
+            <input type="hidden" name="status" role="condition">
+        </div>
+        <div class="field-group-1">
+            <input class="aui-button" type="button" value="查询" role="search" id="query-app" />
+        </div>
+	</fieldset>
+</form>
+<div class="pagination-info">
+        第<span>0</span>条，共<span></span>条
+    </div>
+<table id="mySortableTable" class="aui aui-table-sortable">
+    <thead>
+    <tr id="theader">
+        <th class="aui-table-column-issue-key"></th>
+        <th>应用名称</th>
+        <th>应用key</th>
+        <th>应用密钥</th>
+        <th>应用编码</th>
+        <th class="aui-table-column-unsortable">是否验证签名</th>
+        <th class="aui-table-column-unsortable">access_token<br/>超时秒数</th>
+        <th class="aui-table-column-unsortable">是否校验资源</th>
+        <th>状态</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% _.each(apps, function(app, i) { %>
+    <tr id="row_<%=app.code%>">
+        <td><input class="checkbox" type="checkbox" value="<%=app.code%>" name="checkbox" id="app_<%=app.code%>"></td>
+        <td condition="app-name"><%=app.name%></td>
+        <td><%=app.key%></td>
+        <td><span name="secretHide">********</span> <span name="secretShow" style="display: none"><%=app.secret%></span></td>
+        <td><%=app.code%></td>
+        <td><%=app.checkSign ? "是" : "否"%></td>
+        <td><%=app.tokenTimeoutSec%></td>
+        <td><%=app.checkResource ? "是" : "否"%></td>
+        <td condition="status"><%=app.status === "PENDING" ? "待审批" : "已审批"%></td>
+        <td>
+            <% if(app.status === "PENDING") { %>
+            <a class="aui-button" href="javascript:void(0)" role="approve" data-appCode="<%=app.code%>">审批</a>
+            <% } %>
+        </td>
+        <td>
+            <a class="aui-button" href="#superadmin/app/input/<%=app.code%>">修改</a>
+        </td>
+    </tr>
+    <% }) %>
+    </tbody>
+</table>
+   <div class="pagination">
+        <ul></ul>
+    </div>
+</div>
+
+     <a href="#superadmin/app/input"class="aui-button aui-button-primary" >新增应用</a>
+     <a id="revomeApp" class="aui-button aui-button-primary" >删除应用</a>
+

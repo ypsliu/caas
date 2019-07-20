@@ -1,0 +1,9 @@
+
+caasApiUrl: "http://localhost:8080/api/v1"
+sslEnabled: true
+proxyEnabled: false
+proxyHost: "your http proxy host"
+proxyPort: 3182
+appKey: "8"
+appSecret: "test-app-secret-1"
+signEnabled: true

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.rongcapital.caas.dao.UserTokenDao">
+
+    <insert id="insert" parameterType="cn.rongcapital.caas.po.UserToken">
+        INSERT INTO caas_user_token(
+        userCode,
+        `token`,
+        creationTime,
+        updateTime,
+        comment,
+        creationUser,
+        updateUser)
+        VALUES(
+        #{userCode},
+        #{token},
+        #{creationTime},
+        #{updateTime},
+        #{comment},
+        #{creationUser},
+        #{updateUser}
+        )
+    </insert>
+
+    <select id="getUserToken" parameterType="java.lang.String"
+        resultType="cn.rongcapital.caas.po.UserToken">
+        SELECT * FROM caas_user_token
+        WHERE userCode = #{userCode}
+    </select>
+
+    <delete id="removeTokenByUser" parameterType="java.lang.String">
+        DELETE FROM
+        caas_user_token WHERE userCode =#{userCode}
+    </delete>
+
+</mapper>

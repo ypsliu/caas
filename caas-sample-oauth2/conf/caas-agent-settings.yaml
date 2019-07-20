@@ -1,0 +1,8 @@
+
+caasApiUrl: "https://caas-test.cssrv.dataengine.com/api/v1"
+sslEnabled: true
+proxyEnabled: false
+proxyHost: "your http proxy host"
+proxyPort: 3182
+appKey: "7be7be34d1f84470b998ee3794e8f17a"
+appSecret: "d2f101f5f7464173a11c3a18d73ba740"

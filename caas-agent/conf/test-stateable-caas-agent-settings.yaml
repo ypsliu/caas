@@ -1,0 +1,9 @@
+
+caasApiUrl: "http://caas-user/api/v1"
+sslEnabled: false
+proxyEnabled: false
+proxyHost: "your http proxy host"
+proxyPort: 3182
+appKey: "8300280c959a45e09462145b474f91cf"
+appSecret: "5a94c499e80d45e591384e40d6ce131f"
+signEnabled: true

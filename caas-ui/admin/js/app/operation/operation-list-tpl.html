@@ -1,0 +1,58 @@
+<!--heading-->
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>操作列表</h1>
+        </div>
+    </div>
+</div>
+
+<!--search panel-->
+<div id="sp-table" style="margin-top:30px;">
+    <form class="aui">
+        <fieldset>
+            <div class="field-group-1">
+                <label for="d-fname">操作名称</label>
+                <input class="text long-field" type="text" id="name" name="name" role="condition">
+            </div>
+            <div class="field-group-1">
+                <input class="button submit" type="button" value="查询" role="search" />
+            </div>
+        </fieldset>
+    </form>
+
+    <!--Number Panel-->
+    <div class="pagination-info">
+        第<span></span>条，共<span></span>条
+    </div>
+
+
+    <!--table-->
+    <table class="aui aui-table-sortable" style="display:none">
+        <thead>
+        <tr>
+            <th></th>
+            <th>操作名称</th>
+            <!--th>&nbsp;</th-->
+        </tr>
+        </thead>
+        <tbody>
+        <% _.each(operations, function(operation, i) { %>
+        <tr id="row_<%=operation.code%>">
+            <td><input type="checkbox" id="role_<%=operation.code%>"></td>
+            <td condition="name"><%=operation.name%></td>
+            <!--td><a class="aui-button" href="#admin/operation/update/<%=operation.code%>">修改</a></td-->
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+
+    <!---pagination-->
+    <div class="pagination">
+        <ul></ul>
+    </div>
+</div>
+<!---button field-->
+<div>
+    <!--a class="aui-button aui-button-primary" href="#admin/operation/add">添加操作</a-->  &nbsp;&nbsp;<!--a class="aui-button aui-button-primary" href="javascript:void(0)" id="delBtn">删除操作</a-->
+</div>

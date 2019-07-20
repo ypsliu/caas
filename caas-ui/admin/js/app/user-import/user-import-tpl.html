@@ -1,0 +1,89 @@
+
+<style>
+  @import url("/css/jquery-ui.css");
+  @import url("/css/uploadify.css");
+  @import url("/css/webuploader.css");
+  @import url("/css/showLoading.css");
+</style>
+<div class="login-form"  style="width:800px;">
+  <header class="aui-page-header">
+      <div class="aui-page-header-inner">
+          <div class="aui-page-header-main">
+              <h1>定义字段映射</h1>
+          </div>
+          <div class="aui-page-header-actions"></div>
+      </div>
+  </header>
+    <form method="post"action="/admin" enctype="multipart/form-data" width="100%">
+      <input type="hidden" name="appCode" value="<%=subject.appCode%>">
+      <table class="aui aui-table-sortable" id="table_define">
+          <thead>
+          <tr>
+              <th>表字段</th>
+              <th><input type="radio" name="matchtype" value="matchtype_header" id="matchtype_header">匹配文件表头</th>
+              <th><input type="radio" name="matchtype" value="matchtype_order" id="matchtype_order">匹配列顺序</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>originCode(编码)</td>
+              <td><input class="matchfield_header" type="text" size="15" name="column_code" id="column_code"></td>
+              <td><input class="matchfield_order" type="number" size="5" step="1" min="1" name="order_1" id="order_1"></td>
+            </tr>
+            <tr>
+              <td>name(姓名)</td>
+              <td><input class="matchfield_header" type="text" size="15" name="column_name" id="column_name"></td>
+              <td><input class="matchfield_order" type="number" size="5" step="1" min="1" name="order_1" id="order_2"></td>
+            </tr>
+            <tr>
+              <td>password(密码)</td>
+              <td><input class="matchfield_header"type="text" size="15" name="column_password" id="column_password"></td>
+              <td><input class="matchfield_order" type="number" size="5" step="1" min="1" name="order_2" id="order_3"></td>
+            </tr>
+            <tr>
+              <td>email(邮箱)</td>
+              <td><input class="matchfield_header" type="text" size="15" name="column_email" id="column_email"></td>
+              <td><input class="matchfield_order" type="number" size="5"  step="1" min="1" name="order_3" id="order_4"></td>
+            </tr>
+            <tr>
+            <td>mobile(手机号)</td>
+              <td><input class="matchfield_header" type="text" size="15" name="column_mobile" id="column_mobile"></td>
+              <td><input class="matchfield_order" type="number" size="5" step="1" min="1" name="order_4" id="order_5"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="uploader" style="margin-top:30px;">
+    <!--用来存放文件信息-->
+          <div id="thelist" class="uploader-list"></div>
+          <div class="btns">
+           <div id="picker_file" style="width:400px">选择文件:&nbsp;&nbsp;<input type="text" id=csvfile name="csvfile" size="35"></div>&nbsp;&nbsp;
+           <div style="width:400px"><a class="aui-button" href="javascript:void(0)" id="startUploadBtn">开始上传</a></div><div id="errormsg" style="color:red"></div>
+         </div>
+        </div>
+
+    </form>
+
+  <div id="upload_result">
+  <h3 id="noOfInsert">导入成功</h3>
+  <div>
+     <div id="result_inserted"></div>
+  </div>
+  <h3 id="noOfFailed">导入失败</h3>
+  <div>
+   <div id="result_failed"></div>
+  </div>
+  <h3 id="noOfUpdated">更新记录</h3>
+  <div>
+     <div id="result_updated"></div>
+  </div>
+  <h3 id="noOfExisted">重复记录</h3>
+  <div>
+     <div id="result_existed"></div>
+  </div>
+  <h3 id="noOfInvalid">无效数据</h3>
+  <div>
+     <div id="result_invalid"></div>
+  </div>
+</div>
+
+ </div>

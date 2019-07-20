@@ -1,0 +1,100 @@
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>用户列表</h1>
+        </div>
+    </div>
+</div>
+<div class="aui-message error" style="display:none" id="userError">
+    <p class="title">
+        <span class="aui-icon icon-error"></span>
+        <strong>操作失败</strong>
+    </p>
+    <p>用户操作失败</p>
+</div>
+<div style="margin-top:30px;">
+
+
+    <div class="pagination-info">
+        <%
+        var total = result.total;
+        var from = (result.pageNo) * result.pageSize + 1;
+        var to = from + result.pageSize - 1;
+        if(to > total) {
+        to = total;
+        }
+        %>
+        第<span><%=from%>-<%=to%></span>条，共<span><%=total%></span>条
+    </div>
+    <table class="aui">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>用户名</th>
+
+            <th>邮箱</th>
+            <th>联系方式</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% _.each(result.records, function(user, i) { %>
+        <tr>
+            <td><%=i + 1%></td>
+            <td><%=user.name%></td>
+            <td><%=user.email%></td>
+            <td><%=user.mobile%></td>
+            <td><%=user.status == "ENABLED"? "启用" : "停用"%></td>
+            <td>
+                <button  class="aui-button" name="onOff" code="<%=user.code%>" role="switch" id="onOff" value="<%=user.status == 'ENABLED'? '停用' : '启用'%>"><%=user.status == 'ENABLED'? '停用' : '启用'%></button>
+                <button  class="aui-button" name="kickOut" code="<%=user.code%>" role="switch" id="kickOut" value="">踢出</button>
+            </td>
+        </tr>
+        <% }) %>
+        </tbody>
+
+    </table>
+
+      <%
+        var count = Math.ceil(total / result.pageSize);
+        
+        var current = result.pageNo - 1;
+        var start = current - 5;
+        var end = current + 4;
+
+        if(start < 0) {
+            start = 0;
+            end = 9;
+            if(end > count - 1) {
+                end = count - 1;
+            }
+        } else if(end > count - 1) {
+            end = count - 1;
+            start = end - 9;
+            if(start < 0) {
+                start = 0;
+            }
+        }
+        
+        if(start < 0) {
+            start = 0;
+        }
+        if(end > count - 1) {
+            end = count - 1;
+        }
+    %>
+    <div class="pagination">
+        <ul>
+            <% if(result.pageNo > 1) { %>
+            <li class="prev" data="<%=result.pageNo - 1%>"><a href="javascript:void(0)">上一页</a></li>
+            <% } %>
+            <% for(var i = start;i <= end;i ++) { %>
+            <li<% if(i === result.pageNo - 1) { %> class="inactive"<% } %> data="<%=i + 1%>"><a href="javascript:void(0)"><%=i + 1%></a></li>
+            <% } %>
+            <% if(result.pageNo < count) { %>
+            <li class="next" data="<%=result.pageNo + 1%>"><a href="javascript:void(0)">下一页</a></li>
+            <% } %>
+        </ul>
+
+    </div>

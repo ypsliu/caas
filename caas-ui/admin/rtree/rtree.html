@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>R-Tree</title>
+    <link rel="stylesheet" href="css/bootstrap.css" media="all">
+    <link rel="stylesheet" href="css/style.css" media="all">
+    <!--[if IE]><link rel="stylesheet" type="text/css" href="css/ie.css" /><![endif]-->
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.storageapi.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo.js"></script>
+    <script type="text/javascript" src="js/jquery.utility.js"></script>
+    <script type="text/javascript" src="js/jquery.validation.js"></script>
+    <script type="text/javascript" src="js/jquery.browser.js"></script>
+    <script type="text/javascript" src="js/jquery.rtree.js"></script>
+    <script type="text/javascript">
+        $(document).on("ready", function() {
+            var rtree = new $.RTree();
+            rtree.initialize();
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <a href="javascript:void(0)" class="logo">
+            <span>R-Tree</span>
+        </a>
+        <ul class="menu">
+            <li>
+                <div class="dropdown">
+                    <a href="javascript:void(0)">主题<b class="caret"></b></a>
+                    <ul class="dropdown-list">
+                        <li>
+                            <a href="javascript:void(0)" data-value="new-subject">新建</a>
+                        </li>
+                        <li class="disabled" role="save">
+                            <a href="javascript:void(0)" data-value="save-subject">保存 <span>Ctrl + S</span></a>
+                        </li>
+                        <li class="divider"></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <a href="javascript:void(0)">编辑<b class="caret"></b></a>
+                    <ul class="dropdown-list">
+                        <li class="disabled">
+                            <a href="javascript:void(0)" data-value="undo">撤销 <span>Ctrl + Z</span></a>
+                        </li>
+                        <li class="disabled">
+                            <a href="javascript:void(0)" data-value="redo">重做 <span>Ctrl + Y</span></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="javascript:void(0)" data-value="insert">插入子角色 <span>Ctrl + I</span></a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" data-value="insert-above">在上方插入角色 <span>Ctrl + A</span></a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" data-value="insert-below">在下方插入角色 <span>Ctrl + B</span></a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" data-value="remove">删除角色 <span>Ctrl + D</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <header>
+        <div>
+            <ul class="float-left">
+                <li>
+                    <label>当前主题：</label>
+                    <span id="current-subject"></span>
+                </li>
+            </ul>
+            <ul class="float-right func">
+                <li style="display:none">
+                    <button class="btn btn-danger" id="end-btn"><span class="glyphicon glyphicon-log-out"></span> 退出编辑</button>
+                </li>
+                <li>
+                    <button class="btn btn-primary" id="main-save-btn" disabled="true"><span class="glyphicon glyphicon-floppy-disk"></span> 保存</button>
+                </li>
+            </ul>
+        </div>
+        <hr class="border" />
+    </header>
+    <div class="side-bar">
+    </div>
+    <div class="workboard">
+        <div class="main">
+        </div>
+        <div class="footer-bar">
+            <a href="javascript:void(0)" class="float-left outline-btn" title="隐藏左侧菜单" id="outline-btn">
+                <span></span>
+            </a>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+
+    <div class="tool-bar free" style="display:none">
+        <ul class="tab-nav">
+            <li class="active">
+                <a href="javascript:void(0)"><span class="glyphicon glyphicon-th-list"></span></a>
+            </li>
+        </ul>
+        <div class="dock">
+            <ul>
+                <li>
+                    <a href="javascript:void(0)" class="free-btn" title="分窗显示" id="free-dock">
+                        <span></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="to-right-btn" title="在右侧显示" id="dock-to-right-btn">
+                        <span></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="close-btn" title="关闭" id="close-dock-btn">x</a>
+                </li>
+            </ul>
+        </div>
+        <div class="panel active">
+            <input type="hidden" name="appCode" />
+            <div class="input-group">
+                <label>角色</label>
+                <input type="text" name="roleName" maxlength="100" />
+                <input type="hidden" name="roleCode" />
+            </div>
+            <div class="input-group">
+                <label>类型</label>
+                <div class="dropdown" role="select-type">
+                    <input type="text" name="roleTypeName" autocomplete="off" value="管理员授权" readonly />
+                    <span class="caret"></span>
+                    <input type="hidden" name="roleType" value="PROTECTED" />
+                    <ul class="dropdown-list">
+                        <li><a href="javascript:void(0)" data-value="PUBLIC">自动授权</a></li>
+                        <li><a href="javascript:void(0)" data-value="PROTECTED">管理员授权</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>权限</label>
+                <ul class="resource-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="resource" style="display:none">
+        <div class="form resource">
+            <h2>创建资源</h2>
+            <form onsubmit="return false;">
+                <input type="hidden" name="appCode" />
+                <div class="input-group">
+                    <label>所属应用：</label>
+                    <span>这是个什么应用？</span>
+                </div>
+                <div class="input-group">
+                    <label>资源名称*：</label>
+                    <input type="text" name="name" placeholder="资源名称" maxlength="100" autocomplete="off" />
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    <div class="error-msg" validation="isNotBlank">请输入资源名称</div>
+                </div>
+                <div class="input-group">
+                    <label>资源标识*：</label>
+                    <input type="text" name="identifier" placeholder="资源标识" maxlength="300" autocomplete="off" />
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    <div class="error-msg" validation="isNotBlank">请输入资源标识</div>
+                </div>
+                <div class="input-group">
+                    <label>资源描述：</label>
+                    <textarea  name="comment" placeholder="资源描述" maxlength="300" cols="34" rows="5"></textarea>
+                </div>
+                <div class="func">
+                    <div>
+                        <button class="btn btn-primary" role="save">保存</button>
+                        <button class="btn btn-default" role="cancel">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="operation" style="display:none">
+        <div class="form operation">
+            <h2>创建操作</h2>
+            <form onsubmit="return false;">
+                <input type="hidden" name="appCode" />
+                <div class="input-group">
+                    <label>所属应用：</label>
+                    <span>这是个什么应用？</span>
+                </div>
+                <div class="input-group">
+                    <label>操作名称*：</label>
+                    <input type="text" name="name" placeholder="操作名称" maxlength="100" autocomplete="off" />
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <span class="checking"></span>
+                    <div class="error-msg" validation="isNotBlank">请输入操作名称</div>
+                    <div class="error-msg" verify="true">该操作已经存在，换个名称重试</div>
+                </div>
+                <div class="input-group">
+                    <label>操作描述：</label>
+                    <textarea  name="comment" placeholder="操作描述" maxlength="300" cols="34" rows="5"></textarea>
+                </div>
+                <div class="func">
+                    <div>
+                        <button class="btn btn-primary" role="save">保存</button>
+                        <button class="btn btn-default" role="cancel">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="subject" style="display:none">
+        <div class="form subject">
+            <h2>创建主题</h2>
+            <form onsubmit="return false;">
+                <input type="hidden" name="appCode" />
+                <div class="input-group">
+                    <label>所属应用：</label>
+                    <span>这是个什么应用？</span>
+                </div>
+                <div class="input-group">
+                    <label>主题名称*：</label>
+                    <input type="text" name="name" placeholder="主题名称" maxlength="100" autocomplete="off" />
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <span class="checking"></span>
+                    <div class="error-msg" validation="isNotBlank">请输入主题名称</div>
+                    <div class="error-msg" verify="true">该主题已经存在，换个名称重试</div>
+                </div>
+                <div class="input-group">
+                    <label>操作描述：</label>
+                    <textarea  name="comment" placeholder="主题描述" maxlength="300" cols="34" rows="5"></textarea>
+                </div>
+                <div class="func">
+                    <div>
+                        <button class="btn btn-primary" role="save">保存</button>
+                        <button class="btn btn-default" role="cancel">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="not-login" style="display:none">
+        <div class="warning">
+            <h3>未登录，点击登录按钮去登录。</h3>
+            <a href="/#login" target="_blank" class="btn btn-warning">登录</a>
+        </div>
+    </div>
+
+    <div id="no-app" style="display:none">
+        <div class="warning">
+            <h3>该用户尚未创建应用，点击按钮去申请创建应用。</h3>
+            <a href="javascript:void(0)" target="_blank" class="btn btn-warning">申请</a>
+        </div>
+    </div>
+
+    <div id="start-edit" style="display:none">
+        <div class="info">
+            <h3></h3>
+            <div class="func">
+                <div>
+                    <a href="javascript:void(0)" class="btn btn-primary" role="edit">开始编辑</a>
+                    <a href="javascript:void(0)" class="btn btn-default" role="view">仅查看</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="lock-failed" style="display:none">
+        <div class="warning">
+            <h3>其他用户正在编辑当前主题。</h3>
+            <a href="javascript:void(0)" class="btn btn-warning">仅查看</a>
+        </div>
+    </div>
+
+    <div id="locked" style="display:none">
+        <div class="warning">
+            <h3>其他用户正在编辑当前主题，请稍后再试。</h3>
+            <a href="javascript:void(0)" class="btn btn-warning">关闭</a>
+        </div>
+    </div>
+
+    <div id="lock-error" style="display:none">
+        <div class="warning">
+            <h3>操作失败，请重新登录再试。</h3>
+            <a href="javascript:void(0)" class="btn btn-warning">关闭</a>
+        </div>
+    </div>
+
+    <div id="refresh" style="display:none">
+        <div class="info">
+            <h3>当前处于只读状态，点击刷新按钮，刷新页面重试。</h3>
+            <div class="func">
+                <div>
+                    <a href="javascript:void(0)" class="btn btn-primary" role="refresh">刷新</a>
+                    <a href="javascript:void(0)" class="btn btn-default" role="close">关闭</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading" style="display:none">
+        <div class="loading">
+            <img src="images/loading.gif" />
+        </div>
+    </div>
+
+    <div id="template" style="display:none">
+        <ul class="context-menu" id="node-text-menu">
+            <li role="edit-text">
+                <a href="javascript:void(0)">编辑文字</a>
+            </li>
+            <li role="edit-node">
+                <a href="javascript:void(0)">修改角色</a>
+            </li>
+            <li role="remove-node">
+                <a href="javascript:void(0)">删除角色</a>
+            </li>
+            <li class="divider"></li>
+            <li role="insert-child-node">
+                <a href="javascript:void(0)">插入一个子角色</a>
+            </li>
+            <li role="insert-sibling-above">
+                <a href="javascript:void(0)">在上方插入一个角色</a>
+            </li>
+            <li role="insert-sibling-below">
+                <a href="javascript:void(0)">在下方插入一个角色</a>
+            </li>
+            <li class="divider" style="display:none"></li>
+            <li role="move-up" style="display:none">
+                <a href="javascript:void(0)">上移</a>
+            </li>
+            <li role="move-down" style="display:none">
+                <a href="javascript:void(0)">下移</a>
+            </li>
+            <li role="fold-children" style="display:none">
+                <a href="javascript:void(0)">收起</a>
+            </li>
+            <li role="unfold-children" style="display:none">
+                <a href="javascript:void(0)">展开</a>
+            </li>
+        </ul>
+
+        <div id="root-node">
+            <svg x="50" y="250">
+                <rect x="105" y="12" width="12" height="12" role="node" expanded="true" />
+                <path stroke-dasharray="3,3" d="M 117 17 L 147 17" role="branch" style="display:none" />
+            </svg>
+        </div>
+
+        <div id="sub-node">
+            <svg x="0" y="0">
+                <path stroke-dasharray="3,3" d="M 0 17 L 30 17" role="branch" />
+                <path stroke-dasharray="3,3" d="M 42 17 L 177 17" role="branch" expanded="false" />
+                <rect x="30" y="12" width="12" height="12" role="node" expanded="true" />
+            </svg>
+        </div>
+
+        <li id="resource-item" class="fold">
+            <div> 
+                <span>
+                    <a href="javascript:void(0)" role="view-operation"><span class="glyphicon glyphicon-chevron-right"></span> <span></span></a>
+                </span>
+                <span class="func">
+                    <a href="javascript:void(0)" role="edit-resource">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a href="javascript:void(0)" role="show">
+                        <span class="glyphicon glyphicon-minus-sign"></span>
+                    </a> 
+                    <button class="btn-delete" role="delete-resource">删除</button>
+                </span>
+            </div>
+        </li>
+        
+        <li id="operation-item">
+            <div>
+                <span class="no-wrap"></span>
+                <span class="func">
+                    <a href="javascript:void(0)" role="edit-operation">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a href="javascript:void(0)" role="show">
+                        <span class="glyphicon glyphicon-minus-sign"></span>
+                    </a>
+                    <button class="btn-delete" role="delete-operation">删除</button>
+                </span>
+            </div>
+        </li>
+        
+        <li class="add add-resource" id="add-resource">
+            <div class="dropdown dropdown-2" role="select-resource">
+                <input type="text" name="name" autocomplete="off" readonly="readonly" />
+                <ul class="dropdown-list">
+                    <div>资源列表</div>
+                    <li class="divider"></li>
+                    <li class="add">
+                        <a href="javascript:void(0)" role="add-resource">
+                            <span class="glyphicon glyphicon-plus-sign"></span> 新建资源
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <span class="float-right btn-area">
+                <a href="javascript:void(0)" role="show-resource-dropdown">
+                    <span class="glyphicon glyphicon-plus-sign"></span> 添加资源
+                </a>
+            </span>
+        </li>
+
+        <li class="add add-operation" id="add-operation">
+            <div class="dropdown dropdown-2" role="select-operation">
+                <input type="text" name="name" autocomplete="off" readonly="readonly" />
+                <ul class="dropdown-list">
+                    <div>操作列表</div>
+                    <li class="divider"></li>
+                    <li class="add">
+                        <a href="javascript:void(0)" role="add-operation">
+                            <span class="glyphicon glyphicon-plus-sign"></span> 新建操作
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <span class="float-right btn-area">
+                <a href="javascript:void(0)" role="show-operation-dropdown">
+                    <span class="glyphicon glyphicon-plus-sign"></span> 添加操作
+                </a>
+            </span>
+        </li>
+    </div>
+
+    <div class="toaster" id="toaster" style="display:none">
+        <p></p>
+    </div>
+</body>
+</html>

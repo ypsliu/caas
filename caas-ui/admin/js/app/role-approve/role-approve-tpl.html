@@ -1,0 +1,72 @@
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>角色申请列表</h1>
+        </div>
+    </div>
+</div>
+<div class="aui-message error" style="display:none" id="appQueryError">
+    <p class="title">
+        <span class="aui-icon icon-error"></span>
+        <strong>操作失败</strong>
+    </p>
+    <p>应用操作失败</p>
+</div>
+
+<div id="sp-table" style="margin-top:30px;">
+    <form class="aui">
+        <fieldset>
+            <div class="field-group-1">
+                <label for="d-fname">角色名称：</label>
+                <input class="text long-field" type="text" id="role" name="roleName" role="condition">
+            </div>
+            <div class="field-group-1">
+                <label for="d-fname">用户名：</label>
+                <input class="text long-field" type="text" id="user" name="user" role="condition">
+            </div>
+            <div class="field-group-1">
+                <label for="d-fname">邮箱：</label>
+                <input class="text long-field" type="text" id="email" name="email" role="condition">
+            </div>
+            <div class="field-group-1">
+                <label for="d-fname">电话：</label>
+                <input class="text long-field" type="text" id="mobile" name="mobile" role="condition">
+            </div>
+            <div class="field-group-1">
+                <input class="button submit" type="button" value="查询" role="search" />
+            </div>
+        </fieldset>
+    </form>
+    <div class="pagination-info">
+        第<span>0</span>条，共<span></span>条
+    </div>
+    <table class="aui aui-table-sortable">
+        <thead>
+        <tr>
+            <th class="aui-table-column-unsortable">
+                <input type="checkbox" name="all" />
+            </th>
+            <th>角色</th>
+            <th>用户名</th>
+            <th>用户邮箱</th>
+            <th>用户电话</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% _.each(userRoles, function(userRole, i) { %>
+            <tr>
+                <td><input type="checkbox" name="roleCode" value="<%=userRole.roleCode%>" data-userCode="<%=userRole.userCode%>"></td>
+                <td condition="roleName"><%=userRole.roleName%></td>
+                <td condition="user"><%=userRole.userName%></td>
+                <td condition="email"><%=userRole.email%></td>
+                <td condition="mobile"><%=userRole.mobile%></td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+   <div class="pagination">
+        <ul></ul>
+    </div>
+</div>
+<a id="approve" class="aui-button aui-button-primary">审批</a>
+

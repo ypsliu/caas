@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.rongcapital.caas.dao.AppAdminDao">
+
+	<select id="findByAppCodeAndAdminCode" parameterType="cn.rongcapital.caas.po.AppAdmin"
+		resultType="cn.rongcapital.caas.po.AppAdmin">
+		SELECT appCode,
+		adminCode
+		FROM CAAS_APP_ADMIN
+		WHERE appCode = #{appCode}
+		AND userCode = #{adminCode}
+	</select>
+
+	<insert id="insert" parameterType="cn.rongcapital.caas.po.AppAdmin">
+		INSERT INTO CAAS_APP_ADMIN(
+		appCode,
+		adminCode,
+		creationTime,
+		updateTime,
+		comment,
+		creationUser,
+		updateUser)
+		VALUES(
+		#{appCode},
+		#{adminCode},
+		#{creationTime},
+		#{updateTime},
+		#{comment},
+		#{creationUser},
+		#{updateUser}
+		)
+	</insert>
+
+
+	<insert id="batchInsert" parameterType="java.util.List">
+		INSERT INTO CAAS_APP_ADMIN(
+		appCode,
+		adminCode,
+		creationTime,
+		updateTime,
+		comment,
+		creationUser,
+		updateUser)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.appCode},
+			#{item.adminCode},
+			#{item.creationTime},
+			#{item.updateTime},
+			#{item.comment},
+			#{item.creationUser},
+			#{item.updateUser}
+			)
+		</foreach>
+	</insert>
+
+
+	<delete id="deleteByAppCodeAndAdminCode" parameterType="cn.rongcapital.caas.po.AppUser">
+		DELETE FROM CAAS_APP_ADMIN WHERE appCode = #{appCode} and adminCode =
+		#{adminCode}
+	</delete>
+
+	<delete id="deleteByAdminCode" parameterType="java.lang.String">
+		DELETE FROM CAAS_APP_ADMIN WHERE adminCode = #{adminCode}
+	</delete>
+
+</mapper>

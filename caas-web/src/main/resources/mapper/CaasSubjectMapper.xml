@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.rongcapital.caas.dao.SubjectDao">
+
+	<!-- 所有查询列 -->
+	<sql id="QUERY_COLUMN_LIST">
+		<![CDATA[ code as code,name as name,appCode as appCode,removed as removed,creationTime as creationTime,updateTime as updateTime,comment as comment,creationUser as creationUser,updateUser as updateUser,version as version]]>
+	</sql>
+
+	<!-- 查询列来源表 -->
+	<sql id="QUERY_FROM_TABLE"><![CDATA[FROM caas_subject]]></sql>
+	<!-- 更新列来源表 -->
+	<sql id="UPDATE_FROM_TABLE"><![CDATA[UPDATE caas_subject]]></sql>
+	<!-- 全部条件 -->
+	<sql id="QUERY_WHERE_CLAUSE">
+		<where>
+			<if test="code != null"><![CDATA[ AND code = #{code}]]></if>
+			<if test="name != null"><![CDATA[ AND name = #{name}]]></if>
+			<if test="appCode != null"><![CDATA[ AND appCode = #{appCode}]]></if>
+			<if test="removed != null"><![CDATA[ AND removed = #{removed}]]></if>
+			<if test="creationTime != null"><![CDATA[ AND creationTime = #{creationTime}]]></if>
+			<if test="updateTime != null"><![CDATA[ AND updateTime = #{updateTime}]]></if>
+			<if test="comment != null"><![CDATA[ AND comment = #{comment}]]></if>
+			<if test="creationUser != null"><![CDATA[ AND creationUser = #{creationUser}]]></if>
+			<if test="updateUser != null"><![CDATA[ AND updateUser = #{updateUser}]]></if>
+			<if test="version != null"><![CDATA[ AND version = #{version}]]></if>
+		</where>
+	</sql>
+
+	<!-- 更新列字段,只要不为NULL则更新,除开主键列 -->
+	<sql id="UPDATE_COLUMN_SET">
+		<set>
+			<if test="name != null"><![CDATA[name = #{name},]]></if>
+			<if test="updateTime != null"><![CDATA[updateTime = #{updateTime},]]></if>
+			<if test="comment != null"><![CDATA[comment = #{comment},]]></if>
+			<if test="updateUser != null"><![CDATA[updateUser = #{updateUser},]]></if>
+			<if test="version != null"><![CDATA[version = #{version}]]></if>
+		</set>
+	</sql>
+
+	<!-- 插入action记录 -->
+	<insert id="insert" parameterType="cn.rongcapital.caas.po.Subject">
+		<![CDATA[
+			INSERT INTO caas_subject (code,name,appCode,removed,creationTime,updateTime,comment,creationUser,updateUser,version)
+			VALUES
+			(
+			  #{code},
+			  #{name},
+			  #{appCode},
+			  #{removed},
+			  #{creationTime},
+			  #{updateTime},
+			  #{comment},
+			  #{creationUser},
+			  #{updateUser},
+			  #{version}
+			)
+		]]>
+	</insert>
+
+	 <!--查询记录通过主键 -->
+	<select id="getByCode" parameterType="string"
+		resultType="cn.rongcapital.caas.po.Subject">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+	   <![CDATA[WHERE code = #{code}]]>
+	</select>
+<!--查询所有 -->
+	<select id="getAll" resultType="cn.rongcapital.caas.po.Subject">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where removed !='1'
+	</select>
+<!-- 软删除记录通过主键 -->
+	<update id="removeByCode" parameterType="cn.rongcapital.caas.po.Subject">
+		<include refid="UPDATE_FROM_TABLE" />
+		SET removed='1' ,version=version+1
+		<![CDATA[WHERE code = #{code}]]>
+		and version=#{version}
+	</update>
+	<!-- 修改记录通过主键 -->
+	<update id="updateByCode" parameterType="cn.rongcapital.caas.po.Subject">
+		<![CDATA[UPDATE caas_subject]]> 
+		<include refid="UPDATE_COLUMN_SET" />,version=version+1
+		<![CDATA[WHERE code = #{code}]]>
+			and version=#{version}
+	</update>
+
+  
+
+ 
+	<!-- 其它SQL语句 -->
+	<select id="getByName" parameterType="cn.rongcapital.caas.po.Subject"
+		resultType="cn.rongcapital.caas.po.Subject">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+	   <![CDATA[WHERE name = #{name} and appCode=#{appCode} and removed !='1']]>
+	</select>
+<!-- 其它SQL语句 -->
+	<select id="getAppSubjects" parameterType="string"
+		resultType="cn.rongcapital.caas.po.Subject">
+	<![CDATA[SELECT]]>
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where appCode=#{appCode} and removed !='1' order by creationTime desc
+	</select>
+	
+	
+	<select id="getRoleTreeBySubject" parameterType="string" resultType="java.util.Map">
+	   select roleTree 
+	   <include refid="QUERY_FROM_TABLE" />
+	   where code=#{code}
+	</select>
+	
+	<update id="updateRoleTree4Subject" parameterType="cn.rongcapital.caas.po.Subject">
+	  <include refid="UPDATE_FROM_TABLE" /> 
+	  set 
+	  roleTree=#{roleTree,jdbcType=BLOB},
+	  version=version+1
+	  where code=#{code} and version=#{version}
+	</update>
+</mapper>

@@ -1,0 +1,72 @@
+<style>
+    .select_side{float:left; width:300px}
+    select{width:300px; height:200px}
+    .select_opt{float:left; width:40px; height:100%; margin-top:80px;margin-left: 15px;}
+    .select_opt p{width:26px; height:26px; margin-top:6px; background:url(/images/arr.gif) no-repeat;
+        cursor:pointer; text-indent:-999em}
+    .select_opt p#toright{background-position:2px 0}
+    .select_opt p#toleft{background-position:2px -22px}
+</style>
+
+<div class="login-form"  style="width:800px;">
+    <h2>创建新用户</h2>
+    <div class="aui-message error" style="display:none" id="createError">
+        <p class="title">
+            <span class="aui-icon icon-error"></span>
+            <strong id="createErrorMsg">操作失败</strong>
+        </p>
+        <p>创建用户失败</p>
+    </div>
+
+<form class="aui" style="width:800px;" id="resNewForm" method="post" action="/admin/app/user">
+    <input  type="hidden" name="autoAuth" value="<%=user.autoAuth%>">
+    <input  type="hidden" name="appCode" value="<%=user.appCode%>">
+    <div class="field-group">
+        <label for="name">姓名 <span class="aui-icon icon-required">(required)</span></label>
+        <input class="text long-field" type="text" id="name" name="name" placeholder="用户姓名">
+        <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+        <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+        <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+        <div class="error invalid" verify="true" style="display:none">该用户名称已经存在</div>
+        <div class="error invalid" validation="isNotBlank" style="display:none">请输入用户名称</div>
+    </div>
+    <div class="field-group">
+        <label for="password">密码 <span class="aui-icon icon-required">(required)</span></label>
+        <input class="text long-field" type="text" id="password" name="password" placeholder="用户密码">
+        <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+        <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+        <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+        <div class="error invalid" verify="true" style="display:none">该用户名称已经存在</div>
+        <div class="error invalid" validation="isNotBlank" style="display:none">请输入用户名称</div>
+    </div>
+    <div class="field-group">
+        <label for="mobile">电话 <span class="aui-icon icon-required">(required)</span></label>
+        <input class="text long-field" type="tel" id="mobile" name="mobile" placeholder="电话号码">
+        <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+        <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+        <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+        <div class="error invalid" verify="true" style="display:none">该号码已经存在</div>
+        <div class="error invalid" validation="isNotBlank" style="display:none">请输入电话</div>
+    </div>
+    <div class="field-group">
+        <label for="email">邮箱 <span class="aui-icon icon-required">(required)</span></label>
+        <input class="text long-field" type="text" id="email" name="email" placeholder="@">
+        <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+        <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+        <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+        <div class="error invalid" verify="true" style="display:none">该邮箱名称已经存在</div>
+        <div class="error invalid" validation="isNotBlank" style="display:none">请输入用户邮箱</div>
+    </div>
+
+
+    <div class="field-group">
+        <label for="appName">所属应用<span class="aui-icon icon-required"></span></label>
+        <input class="text long-field" type="text" disabled
+               id="appName" name="appName" placeholder="" value="<%=user.appName%>">
+    </div>
+
+    <div class="buttons-container">
+       <span id="saveBtn"> <a href="javascript:void(0)" class="aui-button aui-button-primary">保存</a></span>  <span id="cancelBtn"> <a href="/#admin/user-managment" class="aui-button aui-button-primary">取消</a></span>
+    </div>
+</form>
+</div>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/colorbox.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>激活</title>
+</head>
+<body class="gray-bg">
+    <header>
+        <div class="fl">
+            <span class="logo"><a href="/">CAAS</a></span>
+        </div>
+        <div class="fr">
+            <ul class="func" id="beforeLogin" style="display:none">
+                <li><a href="/login.html">登录</a></li>
+                <li><a href="javascript:void(0)" role="signup">注册</a></li>
+            </ul>
+            <ul class="func" id="afterLogin" style="display:none">
+                <li><a href="/app-role.html" id="apply">申请应用权限</a></li>
+                <li><a href="/profile.html">用户信息</a></li>
+                <li><a href="/change-password.html" class="v-separator">修改密码</a></li>
+                <li><a href="javascript:void(0)" id="logout">退出 <span class="glyphicon glyphicon-log-out"></span></a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+                <div class="jumbotron" id="activating">
+                    <p class="text">激活中，请稍候。。。</p>
+                    <form>
+                        <input type="hidden" name="email" />
+                        <input type="hidden" name="token" />
+                    </form>
+                </div>
+                <div class="jumbotron" id="email-not-found" style="display:none">
+                    <h4>你的邮箱尚未注册，点击注册按钮，去注册。</h4>
+                    <p>
+                        <a class="btn btn-primary" href="/signup.html">注册</a>
+                    </p>
+                </div>
+                <div class="jumbotron" id="duplicate-activate" style="display:none">
+                    <h4>你的帐户已经激活，点击登录按钮，去登录。</h4>
+                    <p>
+                        <a class="btn btn-primary" href="/login.html">登录</a>
+                    </p>
+                </div>
+                <div class="jumbotron" id="activate-success" style="display:none">
+                    <h4>激活成功，点击登录按钮，去登录。</h4>
+                    <p>
+                        <a class="btn btn-primary" href="/login.html">登录</a>
+                    </p>
+                </div>
+                <div class="jumbotron" id="activate-failure" style="display:none">
+                    <h4>激活失败，点击发送按钮，重新发送激活邮件。</h4>
+                    <p class="text">
+                        <label>你的邮箱地址：</label>
+                        <span></span>
+                    </p>
+                    <p>
+                        <a class="btn btn-primary" href="javascript:void(0)" role="send">发送</a>
+                    </p>
+                </div>
+                <div class="jumbotron" id="send-success" style="display:none">
+                    <h4>激活邮件发送成功，请登录邮箱点击激活按钮。</h4>
+                    <p class="text">
+                        <label>你的邮箱地址：</label>
+                        <span></span>
+                    </p>
+                </div>
+                <div class="jumbotron" id="send-failure" style="display:none">
+                    <h4>发送失败，请重试。</h4>
+                    <p class="text">
+                        <label>你的邮箱地址：</label>
+                        <span></span>
+                    </p>
+                    <p>
+                        <a class="btn btn-primary" href="javascript:void(0)" role="send">发送</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p class="center txt-center">Copyright &copy; 2016-2020 融数金服</p>
+        <div class="logo center top20">
+            <a href="http://www.rongcapital.cn/" target="_blank"></a>
+        </div>
+    </footer>
+    <script src="/js/lib/jquery.js"></script>
+    <script src="/js/lib/require.js"></script>
+    <script src="/js/global.js"></script>
+    <script>
+        $(window).on("load", function() {
+            require(["app/activate"]);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<form class="aui profile-form">
+    <header class="aui-page-header">
+        <div class="aui-page-header-inner">
+            <div class="aui-page-header-main">
+                <h1>个人信息</h1>
+            </div>
+            <div class="aui-page-header-actions"></div>
+        </div>
+    </header>
+    <fieldset>
+        <div class="field-group viewMode">
+            <label id="fullName-label" for="fullName">全名</label>
+            <span id="fullName" class="field-value"><%=user.name%></span>
+        </div>
+        <div class="field-group viewMode">
+            <label id="email-label" for="email">邮箱</label>
+            <span id="email" class="field-value"><%=user.email%></span>
+        </div>
+        <div class="field-group viewMode">
+            <label id="email-label" for="email">角色</label>
+            <span id="email" class="field-value">超级管理员</span>
+        </div>
+    </fieldset>
+</form>

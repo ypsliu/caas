@@ -1,0 +1,401 @@
+* {
+    font-family: 'Verdana', '微软雅黑';
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+body.gray-bg {
+    background-color: #f5f5f5;
+}
+
+ul,ol,li {
+    list-style:none
+}
+
+.top10 {
+    margin-top: 10px!important;
+}
+.top20 {
+    margin-top: 20px!important;
+}
+.top30 {
+    margin-top: 30px!important;
+}
+.top40 {
+    margin-top: 40px!important;
+}
+.top50 {
+    margin-top: 50px!important;
+}
+
+.bottom10 {
+    margin-bottom: 10px!important;
+}
+.bottom20 {
+    margin-bottom: 20px!important;
+}
+.bottom30 {
+    margin-bottom: 30px!important;
+}
+.bottom40 {
+    margin-bottom: 40px!important;
+}
+.bottom50 {
+    margin-bottom: 50px!important;
+}
+
+.center {
+    display: block!important;
+    margin: 0 auto;
+}
+
+.txt-center {
+    text-align: center;
+}
+
+div.container-fluid {
+    min-height: 743px;
+}
+
+div.main {
+    min-height: 700px;
+}
+
+header {
+    overflow: hidden;
+    /*position: fixed;*/
+    height: 45px;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: #337ab7;
+}
+
+header .logo {
+    font-size: 18px;
+    color: #fff;
+    display: inline-block;
+    line-height: 45px;
+    margin-left: 20px;
+}
+
+header .logo a {
+    font-size: 18px;
+    color: #fff;
+    display: inline-block;
+}
+
+header a:hover {
+    text-decoration: none;
+}
+
+header ul.func {
+    overflow: hidden;
+}
+
+header ul.func li {
+    float: left;
+    line-height: 45px;
+}
+
+header ul.func li a {
+    color: #fff;
+    font-size: 14px;
+    margin-right: 20px;
+}
+
+a.v-separator {
+    border-right: 1px solid #fff;
+    padding-right: 18px;
+}
+
+.container-fluid {
+    margin-top: 50px!important;
+}
+
+div.main {
+    margin-top: 45px;
+}
+
+/* form 1 */
+div.form1 {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 0 20px 30px 20px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 0 5px rgba(0,0,0,.1);
+}
+
+div.form1 div.input-group {
+    width: 100%;
+    height: 34px;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 1px;
+    display: block;
+}
+
+div.form1 div.input-group.dropdown, div.form1 div.input-group.dropdown.error {
+    border: none;
+}
+
+div.form1 div.input-group.dropdown span {
+    color: #fff;
+}
+
+div.input-group span.tip {
+    margin: 8px 8px 0 0;
+    display: none;
+    float: right;
+} 
+
+div.input-group span.glyphicon-ok {
+    color: #00cc00!important;
+}
+
+div.input-group span.glyphicon-remove {
+    color: #cc0000!important;
+}
+
+div.input-group span.glyphicon-exclamation-sign {
+    color: #cc0000!important;
+}
+
+div.input-group div.error-msg {
+    display: none;
+    padding-top: 2px;
+    color: #cc0000;
+    font-size: 12px;
+}
+
+div.input-group.ok span.glyphicon-ok {
+    display: inline-block;
+}
+
+div.input-group.error span.glyphicon-remove {
+    display: inline-block;
+}
+
+div.input-group.invalid span.glyphicon-exclamation-sign {
+    display: inline-block;
+}
+
+div.form1 div.input-group.error, div.form1 div.input-group.invalid {
+    border: 1px solid #cc0000!important;
+}
+
+div.input-group.dropdown.error, div.form1 div.input-group.dropdown.invalid {
+    border: none;
+}
+
+div.form1 div.input-group span {
+    margin-left: 5px;
+    font-size: 13px;
+    color: #999;
+}
+
+div.form1 div.input-group input {
+    font-size: 14px;
+    color: #555;
+    border: none;
+    height: 30px;
+    width: 74%;
+}
+
+div.form1 div.input-group.has-btn input {
+    width: 40%;
+}
+
+div.form1 div.input-group.has-btn .btn {
+    height: 32px;
+    float: right;
+    font-size: 12px;
+}
+
+div.form1 div.input-group input:focus {
+    outline: 0;
+}
+
+div.form1 div.button-area {
+    width: 180px;
+}
+
+div.form1 div.input-group span.checking {
+    background-image: url('/images/loading-small.gif');
+    background-size: 20px 20px;
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin: 8px;
+    display: none;
+}
+
+div.form1 ul.dropdown-menu {
+    max-height: 225px;
+    overflow-y: auto;
+}
+
+div.form2 ul.dropdown-menu {
+    max-height: 225px;
+    overflow-y: auto;
+}
+/* form 1 */
+
+/* footer */
+footer {
+    border-top: 1px solid #eee;
+    width: 100%;
+    height: 180px;
+    background-color: #fff;
+    bottom: 0;
+    left: 0;
+    padding-top: 30px;
+}
+
+footer .logo {
+    width: 114px;
+    background-image: url('/images/logo_02.png');
+    background-repeat: no-repeat;
+    background-size: 114px 30px;
+}
+
+footer p {
+    width: 200px;
+    font-size: 12px;
+}
+
+footer .logo a {
+    display: inline-block;
+    width: 100%;
+    height: 30px;
+    color: #fff;
+}
+/**/
+
+div.result {
+    margin-top: 5%;
+    padding: 0 20px 30px 20px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 0 5px rgba(0,0,0,.1);
+}
+
+.user-name {
+    border: 1px solid #eee;
+    width: 120px;
+    height: 120px;
+    text-align: center;
+    padding: 40px 2px 0 2px;
+    font-size: 16px;
+}
+
+.dropdown-menu.app-list li label {
+    display: inline-block;
+    min-width: 160px;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: normal;
+}
+
+.dropdown-menu.app-list .glyphicon {
+    top: -6px;
+}
+
+ul.role-list li {
+    line-height: 30px;
+}
+
+ul.role-list label {
+    margin-right: 20px;
+    text-overflow: ellipsis;
+}
+
+/* pop box */
+div.popup-box {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+div.popup-box span.glyphicon {
+    font-size: 40px;
+    color: #f0ad4e;
+    padding: 20px;
+}
+
+div.popup-box p {
+    text-align: center;
+    min-height: 70px;
+    font-size: 16px;
+}
+
+div.popup-box div.btn-area {
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+div.popup-box div.btn-area > div {
+    overflow: hidden;
+    width: 50%;
+    float: left;
+}
+
+div.popup-box div.btn-area > div:first-child .btn {
+    float: right;
+    margin-right: 40px;
+    min-width: 70px;
+}
+
+div.popup-box div.btn-area > div:last-child .btn {
+    margin-left: 40px;
+    float: left;
+    min-width: 70px;
+}
+
+div.popup-box div.btn-area > .btn {
+    width: 100px;
+}
+
+/* pop box */
+div.next {
+    text-align: center;
+}
+div.next a {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.jumbotron .text {
+    color: #666;
+    font-size: 15px;
+}
+
+.jumbotron h4 {
+    color: #333;
+    font-size: 15px;
+}
+
+div.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000000;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+div.overlay .loading {
+    position: absolute;
+    padding: 20px 50px;
+    top: 120px;
+    left: 200px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 12px;
+}

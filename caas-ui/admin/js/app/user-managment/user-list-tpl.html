@@ -1,0 +1,165 @@
+<!--heading-->
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>用户列表</h1>
+        </div>
+    </div>
+</div>
+
+<!--search panel-->
+<div style="margin-top:30px;">
+    <form class="aui">
+        <fieldset>
+            <div class="field-group-1">
+                <label for="d-fname">用户名</label>
+                <input class="text long-field" type="text" id="name" name="name" role="condition">
+            </div>
+            <div class="field-group-1">
+                <label for="d-fname">电话</label>
+                <input class="text long-field" type="text" id="mobile" name="mobile" role="condition">
+            </div>
+            <div class="field-group-1">
+                <label for="d-fname">邮箱</label>
+                <input class="text long-field" type="text" id="email" name="email" role="condition">
+            </div>
+            <div class="field-group-1">
+                <input class="button submit" type="button" value="查询" role="search" id="search"/>
+            </div>
+        </fieldset>
+    </form>
+
+    <!--Number Panel-->
+    <div class="pagination-info">
+      <%
+        var total = users.total;
+        var from =0,to=0;
+        if(total>0){
+           if(users.pageSize>=total){
+            from =1;
+            to=total;
+           }else{
+           from = (users.pageNo -1) * users.pageSize + 1;
+           to = from + users.pageSize - 1;
+           }
+           
+         if(to > total) {
+         to = total;
+         }
+        }else{
+          from =0;
+          to=0;
+        }
+       
+        %>
+       第<span><%=from%>-<%=to%></span>条，共<span><%=total%></span>条
+    </div>
+    <!--table-->
+    <table class="aui aui-table-sortable">
+        <thead>
+        <tr>
+            <th>用户名</th>
+            <th>邮箱</th>
+            <th>电话</th>
+            <th>状态</th>
+            <th>类型</th>
+            <th>用户授权</th>
+            <th>移除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% _.each(users.records, function(user, i) { %>
+        <tr id="row_<%=user.code%>">
+            <td><%=user.name%></td>
+            <td><%=user.email%></td>
+            <td><%=user.mobile%></td>
+            <td><%=user.status == "ENABLED"? "启用" : "停用"%></td>
+            <td><%=user.userType == "IPA" ? "域用户" : "注册用户"%></td>
+            <td>
+                <span class="roleBtn" user_name="<%=user.name%>" user_code="<%=user.code%>" >
+                    <a class="aui-button" href="/popup/#admin/app/<%=appCode%>/user/<%=user.code%>/roles" role="colorbox">授权</a>
+                </span>
+            </td>
+            <td>
+                <a class="aui-button" href="javascript:void(0)" role="remove-from-app" data-user-code="<%=user.code%>">移除</a>
+            </td>
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+
+    <!---pagination-->
+       <%
+        var count = Math.ceil(total / users.pageSize);
+        
+        var current = users.pageNo - 1;
+        var start = current - 5;
+        var end = current + 4;
+
+        if(start < 0) {
+            start = 0;
+            end = 9;
+            if(end > count - 1) {
+                end = count - 1;
+            }
+        } else if(end > count - 1) {
+            end = count - 1;
+            start = end - 9;
+            if(start < 0) {
+                start = 0;
+            }
+        }
+        
+        if(start < 0) {
+            start = 0;
+        }
+        if(end > count - 1) {
+            end = count - 1;
+        }
+    %>
+    <div class="pagination">
+        <ul>
+          <% if(users.pageNo > 1) { %>
+            <li class="prev" data="<%=users.pageNo - 1%>"><a href="javascript:void(0)">上一页</a></li>
+            <% } %>
+            <% for(var i = start;i <= end;i ++) { %>
+            <li<% if(i === users.pageNo - 1) { %> class="inactive"<% } %> data="<%=i + 1%>"><a href="javascript:void(0)"><%=i + 1%></a></li>
+            <% } %>
+            <% if(users.pageNo < count) { %>
+            <li class="next" data="<%=users.pageNo + 1%>"><a href="javascript:void(0)">下一页</a></li>
+            <% } %>
+           </ul>
+    </div>
+</div>
+<div>
+    <!-- <a class="aui-button aui-button-primary" href="/popup/#admin/app/<%=appCode%>/ipa/users" role="colorbox">添加用户</a> -->
+    <a class="aui-button" href="javascript:void(0)" id="add-user">添加用户</a>
+    <div id="add-user-buttons" style="display:none">
+        <div class="dialog-func">
+            <a class="aui-button aui-button-primary" href="/popup/#admin/app/<%=appCode%>/ipa/users" role="add-ipa-user">ipa用户</a>
+            <a class="aui-button aui-button-primary" href="#admin/user/create" role="create-user">新建用户</a>
+        </div>
+    </div>
+</div>
+<!---button field-->
+ <!--<div>
+    <a class="aui-button aui-button-primary" href="#admin/role/add">添加角色</a>  &nbsp;&nbsp;<a class="aui-button aui-button-primary" href="javascript:void(0)" id="delBtn">删除角色</a>
+</div> -->
+<!-- Render the dialog -->
+<% _.each(users.records, function(user, i) { %>
+<table  style="display: none" class="role_table"  id="role_table_<%=user.code%>">
+    <thead>
+    <tr>
+        <th>角色名称</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% _.each(user.roles, function(role, i) { %>
+    <tr class="row_<%=user.code%>_<%=role.code%>"> <td><span><%=role.name%></span><span><a href="javascript:void(0)" class="aui-button" style="float: right" id="removeRoleBtn_<%=role.code%>" user_code="<%=user.code%>" role_code="<%=role.code%>">删除</a></span></td></tr>
+    <% })%>
+    </tbody>
+</table>
+<% }) %>
+
+
+

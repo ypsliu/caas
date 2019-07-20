@@ -1,0 +1,51 @@
+<div class="login-form">
+    <h2>欢迎注册CAAS应用</h2>
+    <form action="/admin/signup" method="post" class="aui" name="signup">
+        <header class="aui-page-header">
+            <div class="aui-page-header-inner">
+                <div class="aui-page-header-main">
+                    <h3>注册帐户</h3>
+                </div>
+                <div class="aui-page-header-actions"></div>
+            </div>
+        </header>
+        <fieldset>
+            <div class="field-group">
+                <label>用户名：</label>
+                <input class="text" type="text" name="name" title="name" id="name" placeholder="请输入用户名" validation-uri="/validation/admin/name/"/>
+                <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+                <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+                <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+                <div class="error invalid" verify="true" style="display:none">该用户名已经存在</div>
+                <div class="error invalid" validation="isNotBlank" style="display:none">请输入用户名</div>
+            </div>
+            <div class="field-group">
+                <label>邮箱：</label>
+                <input class="text" type="text" name="email" title="email" maxlength="100" placeholder="请输入邮箱" validation-uri="/validation/admin/email/" />
+                <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+                <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+                <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+                <div class="error invalid" verify="true" style="display:none">该邮箱已经存在</div>
+                <div class="error invalid" validation="isNotBlank" style="display:none">请输入邮箱</div>
+                <div class="error invalid" validation="isEmail" style="display:none">请输入正确邮箱</div>
+            </div>
+            <div class="field-group">
+                <label>密码：</label>
+                <input class="text" type="password" name="password" placeholder="请输入密码" />
+                <div class="error invalid" validation="isNotBlank" style="display:none">请输入密码</div>
+            </div>
+            <div class="field-group">
+                <label>密码确认：</label>
+                <input class="text" type="password" name="password2" placeholder="请再次输入密码" />
+                <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+                <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+                <div class="error invalid" validation="isNotBlank" style="display:none">请再次输入密码</div>
+                <div class="error invalid" comparation="true" style="display:none">两次输入密码不符</div>
+            </div>
+            <div class="field-group">
+                <label></label>
+                <input class="aui-button aui-button-primary" type="button" value="注册并去创建应用" id="signup" />
+            </div>
+        </fieldset>
+    </form>
+</div>

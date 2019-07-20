@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>CAAS</title>
+	<link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<header>
+        <div class="fl">
+            <span class="logo"><a href="/">CAAS</a></span>
+        </div>
+        <div class="fr">
+            <ul class="func" id="beforeLogin" style="display:none">
+                <li><a href="/login.html">登录</a></li>
+                <li><a href="/signup.html">注册</a></li>
+            </ul>
+            <ul class="func" id="afterLogin" style="display:none">
+                <li><a href="/app-role.html" id="apply">申请应用权限</a></li>
+                <li><a href="/profile.html">用户信息</a></li>
+                <li><a href="/change-password.html" class="v-separator">修改密码</a></li>
+                <li><a href="javascript:void(0)" id="logout">退出 <span class="glyphicon glyphicon-log-out"></span></a></li>
+            </ul>
+        </div>
+    </header>
+	<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="jumbotron">
+                    <h1>欢迎访问CAAS</h1>
+                    <p id="beforeLoginLink" style="display:none">点击<a href="#">这里</a>，查看用户使用手册。</p>
+                    <p id="afterLoginLink" style="display:none">点击<a href="/login.html">这里</a>，登录。</p>
+                    <p><a class="btn btn-primary btn-lg" href="#" role="button">更多</a></p>
+                </div>
+            </div>
+        </div>
+	</div>
+	<footer>
+        <p class="center txt-center">Copyright &copy; 2016-2020 融数金服</p>
+        <div class="logo center top20"><a href="http://www.rongcapital.cn/" target="_blank"></a></div>
+    </footer>
+    <script src="/js/lib/jquery.js"></script>
+    <script src="/js/lib/require.js"></script>
+	<script src="/js/global.js"></script>
+	<script>
+        $(window).on("load", function() {
+            require(["app/common"]);
+        });
+	</script>
+</body>
+</html>

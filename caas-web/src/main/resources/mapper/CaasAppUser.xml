@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.rongcapital.caas.dao.AppUserDao">
+
+    <select id="findByAppCodeAndUserCode" parameterType="cn.rongcapital.caas.po.AppUser" resultType="cn.rongcapital.caas.po.AppUser">
+        SELECT appCode,
+               userCode
+          FROM caas_app_user
+         WHERE appCode = #{appCode}
+           AND userCode = #{userCode}
+    </select>
+
+    <insert id="insert" parameterType="cn.rongcapital.caas.po.AppUser">
+        INSERT INTO caas_app_user(
+            appCode, 
+            userCode, 
+            creationTime, 
+            updateTime, 
+            comment, 
+            creationUser, 
+            updateUser)
+        VALUES(
+            #{appCode},
+            #{userCode},
+            #{creationTime},
+            #{updateTime},
+            #{comment},
+            #{creationUser},
+            #{updateUser}
+        )
+    </insert>
+    
+    <delete id="deleteByAppCodeAndUserCode" parameterType="cn.rongcapital.caas.po.AppUser">
+        DELETE FROM caas_app_user WHERE appCode = #{appCode} and userCode = #{userCode}
+    </delete>
+
+</mapper>

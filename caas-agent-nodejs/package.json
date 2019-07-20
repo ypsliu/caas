@@ -1,0 +1,24 @@
+{
+  "name": "caas-agent-nodejs",
+  "version": "1.4.0-snapshot",
+  "description": "CAAS Agent",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://gitlab.dataengine.com/shangchunming/caas.git"
+  },
+  "keywords": [
+    "CAAS",
+    "Agent"
+  ],
+  "author": "ZhaoHai",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.1",
+    "http-proxy-agent": "^1.0.0",
+    "https-proxy-agent": "^1.0.0"
+  }
+}

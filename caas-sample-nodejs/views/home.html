@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>CAAS Sample(Node.js)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+	<h1><%=app%></h1>
+	<h3>
+		<a href="/user/info">Access protected resource</a>
+	</h3>
+	<h3>
+		<a href="/user/logout">Logout</a>
+	</h3>
+	<h3>
+		<a href="/login">Login(local)</a>
+	</h3>
+	<h3>
+		<a href="/signup">Register(local)</a>
+	</h3>
+	<h3>
+		<a href="/user/change-password">Change password(local)</a>
+	</h3>
+<% if(locals.targetApp) { %>
+	<a href="<%=targetUrl%>?code=<%=authCode%>" target="_blank">SSO to <%=targetApp%></a>
+<% } %>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Login - CAAS sample</title>
+	<link rel="stylesheet" href="/style.css">
+	<script src="/jquery.js"></script>
+</head>
+<body>
+
+<h3>Welcome to CAAS sample - Register</h3>
+<hr size="1"/>
+
+<form action="/api/v1/sample/register" method="post">
+	<label>用户名：</label><input type="text" name="user_name" size="30" validate-url="/api/v1/sample/user/name/" /><br/>
+	<label>密码：</label><input type="password" name="password" size="30" /><br/>
+	<label>电话：</label><input type="text" name="mobile" size="30" validate-url="/api/v1/sample/user/mobile/" /><br/>
+	<label>邮箱：</label><input type="text" name="email" size="30" validate-url="/api/v1/sample/user/email/" /><br/>
+	<label>验证码：</label><input type="text" name="vcode" size=10 validate-url="/api/v1/sample/vcode/" />
+	<img id="vcode" width="80" />
+	<button type="button" id="refresh">刷新</button><br/>
+	<button type="button" id="registerBtn" style="margin-left: 180px;">注册</button>
+</form>
+<script src="/common.js"></script>
+<script>
+	$(document).on("ready", function() {
+		getVcode(function(vcodeImgBase64) {
+			$("#vcode").attr("src", vcodeImgBase64);
+		});
+		
+		$("#refresh").on("click", function() {
+			getVcode(function(vcodeImgBase64) {
+				$("#vcode").attr("src", vcodeImgBase64);
+			});
+		});
+
+		$("#registerBtn").on("click", function() {
+			if($("input[name='user_name']").val().length > 0
+					&& $("input[name='password']").val().length > 0 
+					&& $("input[name='mobile']").val().length > 0
+					&& $("input[name='email']").val().length > 0
+					&& $("input[name='user_name']").hasClass("valid-border")
+					&& $("input[name='mobile']").hasClass("valid-border")
+					&& $("input[name='email']").hasClass("valid-border")
+					&& $("input[name='vcode']").hasClass("valid-border")) {
+				$("form").submit();
+			}
+		});
+	});
+</script>
+</body>
+</html>

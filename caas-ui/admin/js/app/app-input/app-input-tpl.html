@@ -1,0 +1,115 @@
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>应用编辑</h1>
+        </div>
+    </div>
+</div>
+
+<div class="login-form" style="width:800px;">
+    <div class="aui-message error" style="display:none" id="appEditError">
+        <p class="title">
+            <span class="aui-icon icon-error"></span>
+            <strong>操作失败</strong>
+        </p>
+        <p>应用保存失败</p>
+    </div>
+    <input type="hidden" name="appcode" id="appcode" value="<%=app.code%>">
+
+    <form action="/admin/app" method="post" class="aui" onload="" name="app-input">
+        <% if(app.code) { %>
+            <input type="hidden" name="code" value="<%=app.code%>" />
+            <% } %>
+                <fieldset>
+                    <div class="field-group">
+                        <label for="app-name">应用名称<span class="aui-icon icon-required"> required</span></label>
+                        <input class="text" type="text" id="app-name" name="name" value="<%=app.name%>" ignore-value="<%=app.name%>" title="请输入应用名称">
+                        <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+                        <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+                        <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+                        <div class="error invalid" verify="true" style="display:none">该应用名称已经存在</div>
+                        <div class="error invalid" validation="isNotBlank" style="display:none">请输入应用名称</div>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="key">应用Key<span class="aui-icon icon-required"> required</span></label>
+                        <input class="text" type="text" id="key" value="<%=app.key%>" name="key" title="输入点击按钮生成App Key" <% if(app.code) { %>readonly
+                        <% } %> />
+                            <div class="error invalid" validation="isNotBlank" style="display:none">请输入App Key</div>
+                            <% if(!app.code) { %><a id="generateKey" class="aui-button">生成App Key</a>
+                                <% } %>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="secret">应用密钥<span class="aui-icon icon-required"> required</span></label>
+                        <input class="text" type="text" id="secret" value="<%=app.secret%>" name="secret" title="输入点击按钮生成密钥">
+                        <div class="error invalid" validation="isNotBlank" style="display:none">请输入密钥</div>
+                        <a id="generateSecret" class="aui-button">生成密钥</a>
+
+                    </div>
+                    <div class="field-group">
+                        <label for="expire-time">超时时间<span class="aui-icon icon-required"> required</span></label>
+                        <input class="text" type="text" id="expire-time" value="<%=app.tokenTimeoutSec%>" name="tokenTimeoutSec" title="请输入超时时间">
+                        <span>秒</span>
+                        <div class="error invalid" validation="isNotBlank" style="display:none">请输入超时时间</div>
+                        <div class="error invalid" validation="isMatchPattern, ^[0-9]*$" style="display:none">请输入正确的超时秒数</d iv>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="checkSign">校验签名<span class="aui-icon icon-required"> required</span></label>
+                        <input type="checkbox" id="checkSign" title="默认校验" class="checkbox" <% if(app.checkSign) { %> checked
+                        <% } %> />
+                            <input type="hidden" name="checkSign" value="">
+                    </div>
+
+                    <div class="field-group">
+                        <label for="checkResource">校验资源<span class="aui-icon icon-required"> required</span></label>
+                        <input type="checkbox" id="checkResource" title="默认校验" class="checkbox" <% if(app.checkResource) { %> checked
+                        <% } %> />
+                            <input type="hidden" name="checkResour	ce" value="">
+                    </div>
+                    <div class="field-group">
+                        <label for="checkSign">用户可见<span class="aui-icon icon-required"> required</span></label>
+                        <input type="checkbox" id="appType" title="用户可见" class="checkbox" <% if(app.appType=='PUBLIC' ) { %> checked
+                        <% } %> />
+                            <input type="hidden" name="appType" value="<%=app.appType%>">
+                    </div>
+                    <div class="field-group">
+                        <label for="checkVcode">校验验证码</label>
+                        <div>
+                            <a href="#checkVcodeDropdown" aria-owns="checkVcodeDropdown" aria-haspopup="true" class="aui-dropdown2-trigger"><span id="checkVcodeVal"> <% if(app.checkVcode=='NO_SET' ) { %> 无设置
+                        <% } %><% if(app.checkVcode=='YES' ) { %> 校验<% } %><% if(app.checkVcode=='NO' ) { %> 不校验<% } %><% if(app.checkVcode==null) { %> 无设置<% } %></span></a>
+                            <div id="checkVcodeDropdown" class="aui-dropdown2 aui-style-default aui-dropdown2-in-header">
+                                <div class="aui-dropdown2-section">
+                                    <ul class="aui-list-truncate">
+                                        <li><a class="checkVcodeItem" href="javascript:void(0)">无设置</a></li>
+                                        <li><a class="checkVcodeItem" href="javascript:void(0)">校验</a></li>
+                                        <li><a class="checkVcodeItem" href="javascript:void(0)">不校验</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="checkVcode" name="checkVcode" value="<%=app.checkVcode%>">
+                    </div>
+                    <div class="field-group">
+                        <label>邮件提醒：</label>
+                        <input type="checkbox" class="mt-10" id="emailNotify" <% if(app.emailNotify) { %> checked
+                        <% } %> value="1" />
+                            <input type="hidden" name="emailNotify" value="">
+                    </div>
+                    <div class="field-group">
+                        <label>回调地址<span class="aui-icon icon-required"> required</span></label>
+                        <input type="text" class="text" name="backUrl" placeholder="请输入回调地址" value="<%=app.backUrl%>" maxlength="150" />
+                        <div class="error invalid" validation="isNotBlank" style="display:none">请输入回调地址</div>
+                    </div>
+
+                </fieldset>
+
+                <div class="buttons-container">
+                    <div class="aui-button aui-button-primary" id="appSaveBtn">保存</div>
+                    <span id="cancelBtn"> <a href="#superadmin/app" class="aui-button aui-button-primary">取消</a></span>
+                </div>
+
+
+    </form>
+</div>

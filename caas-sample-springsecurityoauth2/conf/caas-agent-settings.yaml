@@ -1,0 +1,8 @@
+
+caasApiUrl: "http://www.caas-test.com/api/v1"
+sslEnabled: false
+proxyEnabled: false
+proxyHost: "your http proxy host"
+proxyPort: 3182
+appKey: "1474118112189"
+appSecret: "testapp-sec"

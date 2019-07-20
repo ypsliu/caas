@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.rongcapital.caas.dao.UserDao">
+
+	<!-- 所有查询列 -->
+	<sql id="QUERY_COLUMN_LIST">
+		<![CDATA[ code as code,name as name,userType as userType,status as status,mobile as mobile,password as password,email as email,isActive as isActive,originCode as originCode,creationTime as creationTime,updateTime as updateTime,comment as comment,creationUser as creationUser,updateUser as updateUser,version as version, removed as removed]]>
+	</sql>
+	<!-- 智能排序与分页 -->
+	<sql id="QUERY_ORDER_LIMIT_CONDTION">
+		<if test="orderField != null and orderFieldType != null"><![CDATA[ORDER BY ${orderField} ${orderFieldType}]]></if>
+		<if
+			test="startIndex != null and startIndex &gt;= 0 and pageSize != null and pageSize &gt; 0"><![CDATA[LIMIT #{startIndex},#{pageSize}]]></if>
+	</sql>
+	<!-- 查询列来源表 -->
+	<sql id="QUERY_FROM_TABLE"><![CDATA[FROM caas_user]]></sql>
+	<!-- 更新列来源表 -->
+	<sql id="UPDATE_FROM_TABLE"><![CDATA[UPDATE caas_user]]></sql>
+	<!-- 全部条件 -->
+	<sql id="QUERY_WHERE_CLAUSE">
+		<where>
+			<if test="name != null"><![CDATA[ AND name = #{name}]]></if>
+			<if test="userType != null"><![CDATA[ AND userType = #{userType}]]></if>
+			<if test="status != null"><![CDATA[ AND status = #{status}]]></if>
+			<if test="mobile != null"><![CDATA[ AND mobile = #{mobile}]]></if>
+			<if test="password != null"><![CDATA[ AND password = #{password}]]></if>
+			<if test="email != null"><![CDATA[ AND email = #{email}]]></if>
+			<if test="isActive != null"><![CDATA[ AND isActive = #{isActive}]]></if>
+			<if test="originCode != null"><![CDATA[ AND originCode = #{originCode}]]></if>
+			<if test="creationTime != null"><![CDATA[ AND creationTime = #{creationTime}]]></if>
+			<if test="updateTime != null"><![CDATA[ AND updateTime = #{updateTime}]]></if>
+			<if test="comment != null"><![CDATA[ AND comment = #{comment}]]></if>
+			<if test="creationUser != null"><![CDATA[ AND creationUser = #{creationUser}]]></if>
+			<if test="updateUser != null"><![CDATA[ AND updateUser = #{updateUser}]]></if>
+			<if test="version != null"><![CDATA[ AND version = #{version}]]></if>
+			<if test="removed != null"><![CDATA[ AND removed = #{removed}]]></if>
+		</where>
+	</sql>
+
+	<!-- 更新列字段,只要不为NULL则更新,除开主键列 -->
+	<sql id="UPDATE_COLUMN_SET">
+		<set>
+			<if test="name != null"><![CDATA[name = #{name},]]></if>
+			<if test="userType != null"><![CDATA[userType = #{userType},]]></if>
+			<if test="status != null"><![CDATA[status = #{status},]]></if>
+			<if test="mobile != null"><![CDATA[mobile = #{mobile},]]></if>
+			<if test="password != null"><![CDATA[password = #{password},]]></if>
+			<if test="email != null"><![CDATA[email = #{email},]]></if>
+			<if test="isActive != null"><![CDATA[isActive = #{isActive},]]></if>
+			<if test="originCode != null"><![CDATA[originCode = #{originCode},]]></if>
+			<if test="creationTime != null"><![CDATA[creationTime = #{creationTime},]]></if>
+			<if test="updateTime != null"><![CDATA[updateTime = #{updateTime},]]></if>
+			<if test="comment != null"><![CDATA[comment = #{comment},]]></if>
+			<if test="creationUser != null"><![CDATA[creationUser = #{creationUser},]]></if>
+			<if test="updateUser != null"><![CDATA[updateUser = #{updateUser}]]></if>
+		</set>
+	</sql>
+
+	<!-- 插入action记录 -->
+	<insert id="insert" parameterType="cn.rongcapital.caas.po.User">
+		INSERT INTO caas_user
+		(code,name,userType,mobile,password,email,isActive,originCode,status,creationTime,updateTime,comment,creationUser,updateUser)
+		VALUES
+		(
+		#{code},
+		#{name},
+		#{userType},
+		#{mobile},
+		#{password},
+		#{email},
+		#{isActive},
+		#{originCode},
+		#{status},
+		#{creationTime},
+		#{updateTime},
+		#{comment},
+		#{creationUser},
+		#{updateUser}
+		)
+	</insert>
+
+	<!--查询记录通过主键 -->
+	<select id="getByCode" parameterType="string"
+		resultType="cn.rongcapital.caas.po.User">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+	   <![CDATA[WHERE code = #{code}]]>
+		and removed !='1'
+	</select>
+	<!--查询所有 -->
+	<select id="getAll" resultType="cn.rongcapital.caas.po.User">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where removed !='1'
+	</select>
+	<!-- 软删除记录通过主键 -->
+	<update id="removeByCode" parameterType="cn.rongcapital.caas.po.User">
+		<include refid="UPDATE_FROM_TABLE" />
+		SET removed='1' , version=version+1
+		<![CDATA[WHERE code = #{code}]]>and
+		version=#{version}
+	</update>
+	<!-- 修改记录通过主键 -->
+	<update id="updateByCode" parameterType="cn.rongcapital.caas.po.User">
+		<![CDATA[UPDATE caas_user]]>
+		<include refid="UPDATE_COLUMN_SET" />,
+		version=version+1
+		<![CDATA[WHERE code = #{code}]]>and
+		version=#{version}
+	</update>
+
+	<!-- 其它SQL语句 -->
+
+	<!-- void createUserBySystem(User user); -->
+	<select id="getUserByName" parameterType="java.lang.String"
+		resultType="cn.rongcapital.caas.po.User">
+		SELECT
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where name=#{name} and removed !='1'
+	</select>
+
+	<select id="getUserByEmail" parameterType="java.lang.String"
+		resultType="cn.rongcapital.caas.po.User">
+		SELECT
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where email=#{email} and removed !='1'
+	</select>
+
+	<select id="getUserByMobile" parameterType="java.lang.String"
+		resultType="cn.rongcapital.caas.po.User">
+		SELECT
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where mobile=#{mobile} and removed !='1'
+	</select>
+
+	<select id="getAppUsers" parameterType="java.lang.String" resultType="cn.rongcapital.caas.po.User">
+        select cu.code as code,
+               cu.name as name,
+               cu.userType as userType,
+               cu.status as status,
+               cu.mobile as mobile,
+               cu.password as password,
+               cu.email as email,
+               cu.isActive as isActive,
+               cu.originCode as originCode,
+               cu.creationTime as creationTime,
+               cu.updateTime as updateTime,
+               cu.comment as comment,
+               cu.creationUser as creationUser,
+               cu.updateUser as updateUser,
+               cu.version as version, 
+               cu.removed as removed
+          from caas_user cu
+    inner join caas_app_user cau
+            on cu.code = cau.userCode
+           and cau.appCode = #{appCode}
+         where cu.removed != '1'
+	</select>
+
+	<select id="getRoleUsers" parameterType="java.lang.String"
+		resultType="cn.rongcapital.caas.po.User">
+		select u.* from caas_user u, caas_user_role ur where
+		u.code=ur.userCode and ur.roleCode=#{roleCode} and
+		ur.status='CONFIRMED' and u.removed !='1'
+	</select>
+
+	<select id="getRoleApplyingUsers" parameterType="java.lang.String"
+		resultType="cn.rongcapital.caas.po.User">
+		select u.* from caas_user u, caas_user_role ur where
+		u.code=ur.userCode and ur.roleCode=#{roleCode} and ur.status='PENDING'
+	</select>
+
+	<update id="enableUser" parameterType="cn.rongcapital.caas.po.User">
+		update caas_user set
+		status=#{status} ,updateTime = #{updateTime},
+		updateUser=#{updateUser}, version=version+1 where
+		code=#{code} and
+		version=#{version}
+	</update>
+
+	<update id="disableUser" parameterType="cn.rongcapital.caas.po.User">
+		update caas_user set
+		status=#{status}, updateTime = #{updateTime},
+		updateUser=#{updateUser}, version=version+1 where
+		code=#{code} and
+		version=#{version}
+	</update>
+
+
+	<update id="changeUserPassword" parameterType="cn.rongcapital.caas.po.User">
+		update caas_user
+		set password=#{password},
+		updateTime = #{updateTime},
+		updateUser=#{updateUser}, version=version+1
+		where code=#{code} and
+		version=#{version}
+	</update>
+
+
+	<update id="updateUserInfo" parameterType="cn.rongcapital.caas.po.User">
+		update caas_user set
+		<if test="email != null"><![CDATA[email = #{email},]]></if>
+		<if test="mobile != null"><![CDATA[mobile = #{mobile},]]></if>
+		updateTime = #{updateTime},
+		updateUser=#{updateUser},
+		version=version+1
+		where
+		code=#{code} and
+		version=#{version}
+	</update>
+	<select id="getTotalCount" parameterType="cn.rongcapital.caas.vo.admin.UserSearchCondition"
+		resultType="int">
+		select count(1)
+		<include refid="QUERY_FROM_TABLE" />
+		where removed !='1'
+		<if test="code != null and code !=''"><![CDATA[ AND code =#{code} ]]></if>
+		<if test="name != null and name !=''"><![CDATA[ AND name like CONCAT(#{name},'%') ]]></if>
+		<if test="email != null and email !=''"><![CDATA[ AND email like CONCAT(#{email},'%') ]]></if>
+		<if test="mobile != null and mobile !=''"><![CDATA[ AND mobile like CONCAT(#{mobile},'%') ]]></if>
+		<if test="status != null and status !=''"><![CDATA[ AND status =#{status} ]]></if>
+		<if
+			test="(fromTime != null and fromTime !='') and (toTime != null and toTime !='')  "><![CDATA[AND (creationTime >= STR_TO_DATE(#{fromTime},'%Y-%m-%d') and creationTime <= STR_TO_DATE(#{toTime},'%Y-%m-%d'))]]></if>
+		<if
+			test="(fromTime != null and fromTime !='') and (toTime == null or toTime =='')  "><![CDATA[ AND creationTime >= STR_TO_DATE(#{fromTime},'%Y-%m-%d')]]></if>
+		<if
+			test="(fromTime == null or fromTime =='') and (toTime != null and toTime !='')  "><![CDATA[ AND creationTime <= STR_TO_DATE(#{toTime},'%Y-%m-%d') ]]></if>
+	</select>
+	<select id="getUsersByCondition" parameterType="cn.rongcapital.caas.vo.admin.UserSearchCondition"
+		resultType="cn.rongcapital.caas.po.User">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where removed !='1'
+		<if test="code != null and code !=''"><![CDATA[ AND code =#{code} ]]></if>
+		<if test="name != null and name !=''"><![CDATA[ AND name like CONCAT(#{name},'%') ]]></if>
+		<if test="email != null and email !=''"><![CDATA[ AND email like CONCAT(#{email},'%') ]]></if>
+		<if test="mobile != null and mobile !=''"><![CDATA[ AND mobile like CONCAT(#{mobile},'%') ]]></if>
+		<if test="status != null and status !=''"><![CDATA[ AND status =#{status} ]]></if>
+		<if
+			test="(fromTime != null and fromTime !='') and (toTime != null and toTime !='')  "><![CDATA[AND (creationTime >= STR_TO_DATE(#{fromTime},'%Y-%m-%d') and creationTime <= STR_TO_DATE(#{toTime},'%Y-%m-%d'))]]></if>
+		<if
+			test="(fromTime != null and fromTime !='') and (toTime == null or toTime =='')  "><![CDATA[ AND creationTime >= STR_TO_DATE(#{fromTime},'%Y-%m-%d')]]></if>
+		<if
+			test="(fromTime == null or fromTime =='') and (toTime != null and toTime !='')  "><![CDATA[ AND creationTime <= STR_TO_DATE(#{toTime},'%Y-%m-%d') ]]></if>
+		LIMIT #{pageNo},#{pageSize}
+	</select>
+
+	<select id="getAppUsersByCondition" parameterType="cn.rongcapital.caas.vo.admin.UserSearchCondition"
+		resultType="cn.rongcapital.caas.po.User">
+		select cu.code as code,
+               cu.name as name,
+               cu.userType as userType,
+               cu.status as status,
+               cu.mobile as mobile,
+               cu.password as password,
+               cu.email as email,
+               cu.originCode as originCode,
+               cu.creationTime as creationTime,
+               cu.updateTime as updateTime,
+               cu.comment as comment,
+               cu.creationUser as creationUser,
+               cu.updateUser as updateUser,
+               cu.version as version, 
+               cu.removed as removed
+          from caas_user cu
+    inner join caas_app_user cau
+            on cu.code = cau.userCode
+           and cau.appCode = #{appCode}
+         where cu.removed != '1'
+		<if test="name != null and name !=''"><![CDATA[ AND cu.name like CONCAT(#{name},'%') ]]></if>
+		<if test="email != null and email !=''"><![CDATA[ AND cu.email like CONCAT(#{email},'%') ]]></if>
+		<if test="mobile != null and mobile !=''"><![CDATA[ AND cu.mobile like CONCAT(#{mobile},'%') ]]></if>
+		<if test="status != null and status !=''"><![CDATA[ AND cu.status =#{status} ]]></if>
+		<if
+			test="(fromTime != null and fromTime !='') and (toTime != null and toTime !='')  "><![CDATA[AND (cu.creationTime >= STR_TO_DATE(#{fromTime},'%Y-%m-%d') and cu.creationTime <= STR_TO_DATE(#{toTime},'%Y-%m-%d'))]]></if>
+		<if
+			test="(fromTime != null and fromTime !='') and (toTime == null or toTime =='')  "><![CDATA[ AND cu.creationTime >= STR_TO_DATE(#{fromTime},'%Y-%m-%d')]]></if>
+		<if
+			test="(fromTime == null or fromTime =='') and (toTime != null and toTime !='')  "><![CDATA[ AND cu.creationTime <= STR_TO_DATE(#{toTime},'%Y-%m-%d') ]]></if>
+		order by cu.code
+		LIMIT #{pageNo},#{pageSize}
+	</select>
+
+	<select id="getTotalCountOfAppUsers" parameterType="cn.rongcapital.caas.vo.admin.UserSearchCondition"
+		resultType="int">
+		select count(1)
+		  from caas_user cu
+    inner join caas_app_user cau
+            on cu.code = cau.userCode
+           and cau.appCode = #{appCode}
+		 where removed !='1'
+		<if test="name != null and name !=''"><![CDATA[ AND cu.name like CONCAT(#{name},'%') ]]></if>
+		<if test="email != null and email !=''"><![CDATA[ AND cu.email like CONCAT(#{email},'%') ]]></if>
+		<if test="mobile != null and mobile !=''"><![CDATA[ AND cu.mobile like CONCAT(#{mobile},'%') ]]></if>
+		<if test="status != null and status !=''"><![CDATA[ AND cu.status =#{status} ]]></if>
+		<if
+			test="(fromTime != null and fromTime !='') and (toTime != null and toTime !='')  "><![CDATA[AND (cu.creationTime >= STR_TO_DATE(#{fromTime},'%Y-%m-%d') and cu.creationTime <= STR_TO_DATE(#{toTime},'%Y-%m-%d'))]]></if>
+		<if
+			test="(fromTime != null and fromTime !='') and (toTime == null or toTime =='')  "><![CDATA[ AND cu.creationTime >= STR_TO_DATE(#{fromTime},'%Y-%m-%d')]]></if>
+		<if
+			test="(fromTime == null or fromTime =='') and (toTime != null and toTime !='')  "><![CDATA[ AND cu.creationTime <= STR_TO_DATE(#{toTime},'%Y-%m-%d') ]]></if>
+	</select>
+
+	<select id="getAppPendingUserRoles" parameterType="string"
+		resultType="cn.rongcapital.caas.po.UserRole">
+		select user.code as userCode, user.name as
+		userName,user.email as email,user.mobile as mobile, app.code as
+		appCode,
+		role.code as roleCode, role.name as roleName,
+		ur.status as
+		`status`
+		from caas_app app inner join caas_role role on
+		app.code=role.appCode
+		inner join caas_user_role ur on
+		role.code=ur.roleCode
+		inner join caas_user user on
+		ur.userCode=user.code
+		where ur.status='PENDING' AND app.code=#{appCode}
+	</select>
+
+
+	<insert id="batchInsert" parameterType="java.util.List">
+		INSERT INTO caas_user
+		(code,name,userType,mobile,password,email,originCode,status,creationTime,creationUser)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.code},
+			#{item.name},
+			'',
+			#{item.mobile},
+			#{item.password},
+			#{item.email},
+			#{item.originCode},
+			#{item.status},
+			#{item.creationTime},
+			#{item.creationUser}
+			)
+		</foreach>
+	</insert>
+
+	<update id="batchUpdate" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			<include refid="UPDATE_FROM_TABLE" />
+			<set>
+				`password`=#{item.password},
+				`updateTime`=#{item.updateTime},
+				`updateUser`=#{item.updateUser},
+				`version`=version+1
+			</set>
+			<where>
+				`name`=#{item.name} and `email`=#{item.email} and
+				`mobile`=#{item.mobile}
+				and `version` =#{item.version}
+			</where>
+		</foreach>
+	</update>
+
+
+	<update id="updateMatchedUser" parameterType="cn.rongcapital.caas.po.User">
+		<include refid="UPDATE_FROM_TABLE" />
+		<set>
+			password=#{password},
+			updateTime=#{updateTime},
+			updateUser=#{updateUser},
+			version=version+1
+		</set>
+		where `name`=#{name} and `email`=#{email} and `mobile`=#{mobile}
+		and
+		`version`=#{version}
+	</update>
+
+	<insert id="saveUserImportResult" parameterType="cn.rongcapital.caas.vo.UserImportResult">
+		insert into
+		caas_user_upload values(
+		#{code},#{appCode},#{inserted,jdbcType=BLOB},#{updated,jdbcType=BLOB},#{invalid,jdbcType=BLOB},#{existed,jdbcType=BLOB},#{failed,jdbcType=BLOB},#{status},#{comment},#{creationUser},#{creationTime}
+		)
+	</insert>
+
+	<select id="getUploadResultByType" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select ${type}
+		from caas_user_upload
+		where code=#{code}
+	</select>
+
+	<update id="removeAppRoles4User" parameterType="java.util.Map">
+		delete from caas_user_role where
+		userCode=#{userCode}
+		and
+		roleCode in (
+		select code from caas_role where appCode=#{appCode})
+	</update>
+	
+	<update id="activate" parameterType="cn.rongcapital.caas.po.User">
+		<include refid="UPDATE_FROM_TABLE" />
+		SET isActive='1' , version=version+1
+		<![CDATA[WHERE code = #{code}]]>and
+		version=#{version}  and removed !='1'
+	</update>
+    
+    <delete id="removeOneByCode" parameterType="java.lang.String">
+        DELETE FROM CAAS_USER WHERE code = #{code}
+    </delete>
+
+</mapper>

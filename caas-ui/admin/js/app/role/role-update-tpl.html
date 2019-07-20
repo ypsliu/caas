@@ -1,0 +1,82 @@
+<style>
+    .select_side{float:left; width:300px}
+    select{width:300px; height:200px}
+    .select_opt{float:left; width:40px; height:100%; margin-top:80px;margin-left: 15px;}
+    .select_opt p{width:26px; height:26px; margin-top:6px; background:url(/images/arr.gif) no-repeat;
+        cursor:pointer; text-indent:-999em}
+    .select_opt p#toright{background-position:2px 0}
+    .select_opt p#toleft{background-position:2px -22px}
+</style>
+
+<div class="login-form"  style="width:800px;">
+    <h2>角色修改</h2>
+    <div class="aui-message error" style="display:none" id="resCreateError">
+        <p class="title">
+            <span class="aui-icon icon-error"></span>
+            <strong id="resCreateErrorMsg">操作失败</strong>
+        </p>
+        <p>角色修改失败</p>
+    </div>
+
+    <form class="aui" style="width:800px;" id="resNewForm" method="post" action="/admin/role">
+        <input  type="hidden" name="autoAuthVal" id="old_autoAuth" value="<%=role.autoAuth%>">
+        <input  type="hidden" name="applyEnabledVal" id="old_applyEnabledVal" value="<%=role.applyEnabled%>">
+        <input  type="hidden" name="old_name" id="old_name" value="<%=role.name%>">
+        <input  type="hidden" name="code" value="<%=role.code%>">
+        <input  type="hidden" name="appCode" value="<%=role.appCode%>">
+        <input  type="hidden" name="resources" value="<%=role.resources%>">
+        <div class="field-group">
+            <label for="name">角色名称 <span class="aui-icon icon-required">(required)</span></label>
+            <input class="text long-field" type="text" id="name" name="name" value="<%=role.name%>" ignore-value="<%=role.name%>">
+            <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+            <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+            <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+            <div class="error invalid" verify="true" style="display:none">该角色名称已经存在</div>
+            <div class="error invalid" validation="isNotBlank" style="display:none">请输入角色名称</div>
+        </div>
+        <fieldset>
+         <div class="field-group">
+            <label for="autoAuth">角色类型 <span class="aui-icon icon-required">(required)</span></label>
+            <input type="radio" id="roleType_public" name="roleType" class="radio" value="PUBLIC" <% if(role.roleType=='PUBLIC'){%> checked<%}%> >自动申请   
+            <input type="radio" id="roleType_protected" name="roleType" class="radio" value="PROTECTED"<% if(role.roleType=='PROTECTED'){%> checked<%}%> >管理员审批   
+            <input type="radio" id="roleType_private" name="roleType" class="radio" value="PRIVATE"<% if(role.roleType=='PRIVATE'){%> checked<%}%> >不允许申请
+        </div>
+        </fieldset>
+  
+        <div class="field-group">
+            <label for="appName">所属应用<span class="aui-icon icon-required"></span></label>
+            <input class="text long-field" type="text" disabled
+                   id="appName" name="appName" placeholder="" value="<%=role.appName%>">
+        </div>
+
+
+        <div id="resourcelist" style="float: right;margin-right: 100px" >
+            <div class="select_side">
+                <p><b>资源列表</b></p>
+                <select id="selectL" name="selectL" multiple="multiple">
+
+                </select>
+            </div>
+
+            <div class="select_opt">
+                <p id="toright" title="添加">></p>
+                <p id="toleft" title="移除"><</p>
+            </div>
+            <div class="select_side">
+                <p><b>已选资源</b></p>
+                <select id="selectR" name="selectR" multiple="multiple">
+                    <% _.each(role.resources, function(res, i) { %>
+                       <option value="<%=res.code%>"><%=res.name%></option>
+                    <% })%>
+                </select>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <span id="saveBtn"> <a href="javascript:void(0)" class="aui-button aui-button-primary">保存</a></span><span id="cancelBtn"> <a href="#admin/role/list" class="aui-button aui-button-primary">取消</a></span>
+        </div>
+    </form>
+</div>
+
+
+

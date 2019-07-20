@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Login - CAAS sample</title>
+	<link rel="stylesheet" href="/style.css">
+	<script src="/jquery.js"></script>
+</head>
+<body>
+
+<h3>Welcome to CAAS sample - Login</h3>
+<hr size="1"/>
+
+<form action="/api/v1/sample/login" method="post">
+	<label>用户名/邮箱/手机号：</label><input type="text" name="login_name" size="30" /><br/>
+	<label>密码：</label><input type="password" name="password" size="30" /><br/>
+	<label>验证码：</label><input type="text" name="vcode" size=10 validate-url="/api/v1/sample/vcode/" />
+	<img id="vcode" width="80" />
+	<button type="button" id="refresh">刷新</button><br/>
+	<button type="button" id="loginBtn" style="margin-left: 180px;">登录</button>
+</form>
+<script src="/common.js"></script>
+<script>
+	$(document).on("ready", function() {
+		getVcode(function(vcodeImgBase64) {
+			$("#vcode").attr("src", vcodeImgBase64);
+		});
+		
+		$("#refresh").on("click", function() {
+			getVcode(function(vcodeImgBase64) {
+				$("#vcode").attr("src", vcodeImgBase64);
+			});
+		});
+
+		$("#loginBtn").on("click", function() {
+			if($("input[name='login_name']").val().length > 0
+					&& $("input[name='password']").val().length > 0 
+					&& $("input[name='vcode']").hasClass("valid-border")) {
+				$("form").submit();
+			}
+		});
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="clusterRedisNodes1" class="org.springframework.data.redis.connection.RedisNode">
+        <constructor-arg value="${redis.node1.host}" />
+        <constructor-arg value="${redis.node1.port}" type="int" />
+    </bean>
+    <bean id="clusterRedisNodes2" class="org.springframework.data.redis.connection.RedisNode">
+        <constructor-arg value="${redis.node2.host}" />
+        <constructor-arg value="${redis.node2.port}" type="int" />
+    </bean>
+    <bean id="clusterRedisNodes3" class="org.springframework.data.redis.connection.RedisNode">
+        <constructor-arg value="${redis.node3.host}" />
+        <constructor-arg value="${redis.node3.port}" type="int" />
+    </bean>
+    <bean id="clusterRedisNodes4" class="org.springframework.data.redis.connection.RedisNode">
+        <constructor-arg value="${redis.node4.host}" />
+        <constructor-arg value="${redis.node4.port}" type="int" />
+    </bean>
+    <bean id="clusterRedisNodes5" class="org.springframework.data.redis.connection.RedisNode">
+        <constructor-arg value="${redis.node5.host}" />
+        <constructor-arg value="${redis.node5.port}" type="int" />
+    </bean>
+    <bean id="clusterRedisNodes6" class="org.springframework.data.redis.connection.RedisNode">
+        <constructor-arg value="${redis.node6.host}" />
+        <constructor-arg value="${redis.node6.port}" type="int" />
+    </bean>
+    <bean id="clusterRedisNodes7" class="org.springframework.data.redis.connection.RedisNode">
+        <constructor-arg value="${redis.node7.host}" />
+        <constructor-arg value="${redis.node7.port}" type="int" />
+    </bean>
+    <bean id="clusterRedisNodes8" class="org.springframework.data.redis.connection.RedisNode">
+        <constructor-arg value="${redis.node8.host}" />
+        <constructor-arg value="${redis.node8.port}" type="int" />
+    </bean>
+    <bean id="clusterRedisNodes9" class="org.springframework.data.redis.connection.RedisNode">
+        <constructor-arg value="${redis.node9.host}" />
+        <constructor-arg value="${redis.node9.port}" type="int" />
+    </bean>
+
+    <bean id="sessionRepository" class="org.springframework.session.data.redis.RedisOperationsSessionRepository">
+        <constructor-arg ref="redisTemplateSession" />
+        <property name="defaultMaxInactiveInterval" value="1200" />
+    </bean>
+
+
+    <bean class="org.springframework.boot.context.embedded.FilterRegistrationBean">
+        <property name="name" value="cookieBasedSessionFilterRegistration" />
+        <property name="filter">
+            <bean class="org.springframework.web.filter.DelegatingFilterProxy">
+                <constructor-arg>
+                    <bean class="org.springframework.session.web.http.SessionRepositoryFilter">
+                        <constructor-arg ref="sessionRepository" />
+                        <property name="httpSessionStrategy">
+                            <bean class="org.springframework.session.web.http.CookieHttpSessionStrategy" />
+                        </property>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="urlPatterns">
+            <list>
+                <value>/api/v1/admin/*</value>
+                <value>/api/v1/validation/admin/*</value>
+                <value>/api/v1/validation/app/*</value>
+                <value>/api/v1/oauth2/*</value>
+                <value>/api/v1/common/vimg</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.boot.context.embedded.FilterRegistrationBean">
+        <property name="name" value="headerBasedSessionFilterRegistration" />
+        <property name="filter">
+            <bean class="org.springframework.web.filter.DelegatingFilterProxy">
+                <constructor-arg>
+                    <bean class="org.springframework.session.web.http.SessionRepositoryFilter">
+                        <constructor-arg ref="sessionRepository" />
+                        <property name="httpSessionStrategy">
+                            <bean class="cn.rongcapital.caas.http.HeaderHttpSessionStrategy" />
+                        </property>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="urlPatterns">
+            <list>
+                <value>/api/v1/user/register</value>
+                <value>/api/v1/user/login</value>
+                <value>/api/v1/user/changepwd</value>
+                <value>/api/v1/user/profile</value>
+                <value>/api/v1/validation/vcode/*</value>
+                <value>/api/v1/validation/user/*</value>
+                <value>/api/v1/common/base64vimg</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="redisClusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+        <property name="clusterNodes">
+            <set>
+                <ref bean="clusterRedisNodes1" />
+                <ref bean="clusterRedisNodes2" />
+                <ref bean="clusterRedisNodes3" />
+                <ref bean="clusterRedisNodes4" />
+                <ref bean="clusterRedisNodes5" />
+                <ref bean="clusterRedisNodes6" />
+                <ref bean="clusterRedisNodes7" />
+                <ref bean="clusterRedisNodes8" />
+                <ref bean="clusterRedisNodes9" />
+            </set>
+        </property>
+    </bean>
+
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <constructor-arg ref="redisClusterConfiguration" />
+    </bean>
+
+    <bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+
+    <bean id="jsonRedisSerializer" class="org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer">
+        <constructor-arg type="java.lang.Class" value="cn.rongcapital.caas.po.CacheWrapper" />
+    </bean>
+
+    <bean id="jdkRedisSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer">
+    </bean>
+
+    <bean id="redisTemplateSession" class="org.springframework.data.redis.core.RedisTemplate"
+        p:connection-factory-ref="jedisConnectionFactory" p:keySerializer-ref="stringRedisSerializer"
+        p:hashKeySerializer-ref="stringRedisSerializer" />
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+        p:connection-factory-ref="jedisConnectionFactory" p:keySerializer-ref="stringRedisSerializer"
+        p:hashKeySerializer-ref="stringRedisSerializer" p:valueSerializer-ref="stringRedisSerializer" />
+
+    <bean id="redisTemplateCache" class="org.springframework.data.redis.core.RedisTemplate"
+        p:connection-factory-ref="jedisConnectionFactory" p:keySerializer-ref="stringRedisSerializer"
+        p:hashKeySerializer-ref="stringRedisSerializer" p:valueSerializer-ref="jdkRedisSerializer" />
+
+</beans>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.rongcapital.caas.dao.RoleResourceDao">
+
+	<!-- 所有查询列 -->
+	<sql id="QUERY_COLUMN_LIST">
+		<![CDATA[ roleCode as roleCode,resourceCode as resourceCode,operationCode as operationCode]]>
+	</sql>
+	<!-- 智能排序与分页 -->
+	<sql id="QUERY_ORDER_LIMIT_CONDTION">
+		<if test="orderField != null and orderFieldType != null"><![CDATA[ORDER BY ${orderField} ${orderFieldType}]]></if>
+		<if
+			test="startIndex != null and startIndex &gt;= 0 and pageSize != null and pageSize &gt; 0"><![CDATA[LIMIT #{startIndex},#{pageSize}]]></if>
+	</sql>
+	<!-- 查询列来源表 -->
+	<sql id="QUERY_FROM_TABLE"><![CDATA[FROM caas_role_resource]]></sql>
+	<!-- 更新列来源表 -->
+	<sql id="UPDATE_FROM_TABLE"><![CDATA[UPDATE caas_role_resource]]></sql>
+	<!-- 全部条件 -->
+	<sql id="QUERY_WHERE_CLAUSE">
+		<where>
+			<if test="roleCode != null"><![CDATA[ AND roleCode = #{roleCode}]]></if>
+			<if test="resourceCode != null"><![CDATA[ AND resourceCode = #{resourceCode}]]></if>
+		</where>
+	</sql>
+
+	<!-- 更新列字段,只要不为NULL则更新,除开主键列 -->
+	<sql id="UPDATE_COLUMN_SET">
+		<set>
+			<if test="roleCode != null"><![CDATA[roleCode = #{roleCode},]]></if>
+			<if test="resourceCode != null"><![CDATA[resourceCode = #{resourceCode}]]></if>
+		</set>
+	</sql>
+
+	<!-- 插入action记录 -->
+	<insert id="insert" parameterType="cn.rongcapital.caas.po.RoleResource">
+		<![CDATA[
+			INSERT INTO caas_role_resource (roleCode,resourceCode,operationCode)
+			VALUES
+			(
+			  #{roleCode},
+			  #{resourceCode},
+			  #{operationCode}
+			)
+			
+		]]>
+	</insert>
+	
+		<!-- 插入action记录 -->
+	<insert id="insertList" parameterType="java.util.List">
+			INSERT INTO caas_role_resource (roleCode,resourceCode,operationCode)
+			VALUES
+			<foreach collection="list" item="item" index="index" separator=",">
+			(
+			  #{item.roleCode},
+			  #{item.resourceCode},
+			  #{item.operationCode}
+			)
+			  </foreach>
+	</insert>
+
+
+	<!--查询所有 -->
+	<select id="getAll" resultType="cn.rongcapital.caas.po.RoleResource">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		  
+	</select>
+ 
+     <select id="getByRole" parameterType="string" resultType="cn.rongcapital.caas.po.RoleResource">
+		   select rr.roleCode as roleCode ,rr.resourceCode as resourceCode,rr.operationCode, res.name as resourceName
+			from caas_role_resource rr, caas_resource res
+			where rr.resourceCode=res.code
+			and rr.roleCode=#{roleCode} and res.removed !='1'
+	</select>
+	
+  
+	<delete id="removeByRole" parameterType="string">
+		delete
+		<include refid="QUERY_FROM_TABLE" />
+		<![CDATA[WHERE roleCode = #{roleCode}]]>
+	</delete>
+	
+	<delete id="removeByResource" parameterType="cn.rongcapital.caas.po.RoleResource">
+		delete
+		<include refid="QUERY_FROM_TABLE" />
+		<![CDATA[WHERE resourceCode = #{resourceCode}]]>
+	</delete>
+	
+	
+	<!-- 修改记录通过主键 -->
+	<update id="updateByCode" parameterType="cn.rongcapital.caas.po.RoleResource">
+		<![CDATA[UPDATE caas_role_resource]]>
+		<include refid="UPDATE_COLUMN_SET" />
+		<![CDATA[WHERE code = #{code}]]>
+	</update>
+
+
+
+	<!-- 其它SQL语句 -->
+     <delete id="removeByCode" parameterType="cn.rongcapital.caas.po.RoleResource">
+		delete
+		<include refid="QUERY_FROM_TABLE" />
+		<![CDATA[WHERE  roleCode = #{roleCode} and resourceCode = #{resourceCode}]]>
+	</delete>
+
+</mapper>

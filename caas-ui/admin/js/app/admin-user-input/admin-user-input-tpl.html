@@ -1,0 +1,64 @@
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>管理员编辑</h1>
+        </div>
+    </div>
+</div>
+
+<div class="login-form"  style="width:800px;">
+    <div class="aui-message error" style="display:none" id="adminUserError">
+        <p class="title">
+            <span class="aui-icon icon-error"></span>
+            <strong>操作失败</strong>
+        </p>
+        <p>管理员保存失败</p>
+    </div>
+<form action="/admin" method="post" id="adminUser" name="adminUser" class="aui">
+	<% if(adminUser.code) { %>
+		<input type="hidden" name="code" id="adminUserCode" value="<%=adminUser.code%>" />
+	<% } %>
+	<fieldset>
+        <div class="field-group">
+            <label for="name">管理员名<span class="aui-icon icon-required"> required</span></label>
+            <input class="text" type="text" name="name" title="name" id="name" value="<%=adminUser.name%>" ignore-value="<%=adminUser.name%>" placeholder="请输入管理员名" />
+            <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+            <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+            <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+            <div class="error invalid" verify="true" style="display:none">该管理员名已经存在</div>
+            <div class="error invalid" validation="isNotBlank" style="display:none">请输入管理员名</div>
+        </div>
+        <div class="field-group">
+            <label for="email">邮箱<span class="aui-icon icon-required"> required</span></label>
+            <input class="text" type="text" name="email" title="email" id="email" value="<%=adminUser.email%>" placeholder="请输入邮箱" ignore-value="<%=adminUser.email%>"/>
+            <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+            <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+            <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+            <div class="error invalid" verify="true" style="display:none">该邮箱已经存在</div>
+            <div class="error invalid" validation="isNotBlank" style="display:none">请输入邮箱</div>
+            <div class="error invalid" validation="isEmail" style="display:none">请输入正确邮箱</div>
+        </div>
+        <div class="field-group">
+            <label for="password">密码<span class="aui-icon icon-required"> required</span></label>
+            <input class="text" type="password" name="password" title="password" id="password" value="<%=adminUser.code ? '*******' : ''%>" placeholder="请输入密码" />
+            <div class="error invalid" validation="isNotBlank" style="display:none">请输入密码</div>
+        </div>
+
+        <div class="field-group">
+                <label for="appCode">应用</label>
+                <a href="javascript:void(0)" aria-owns="appCode" aria-haspopup="true" class="aui-button aui-dropdown2-trigger aui-style-default">请选择应用</a></p>
+                <div id="appCode" class="aui-dropdown2 aui-style-default">
+                    <ul class="aui-list-truncate">
+                    </ul>
+                </div>
+            <input type="hidden" name="appCode" value="<%=adminUser.appCode%>"/>
+            <div class="error invalid" validation="isNotBlank" style="display:none">请选择应用</div>
+        </div>
+        <div class="field-group">
+            <div class="aui-button aui-button-primary" id="saveAdminUser">保存</div>
+            <span id="cancelBtn"> <a href="#superadmin/admin-user" class="aui-button aui-button-primary">取消</a></span>
+        </div>
+	</fieldset>
+
+</form>
+    </div>

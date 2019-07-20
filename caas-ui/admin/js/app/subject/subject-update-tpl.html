@@ -1,0 +1,44 @@
+<style>
+    .select_side{float:left; width:300px}
+    select{width:300px; height:200px}
+    .select_opt{float:left; width:40px; height:100%; margin-top:80px;margin-left: 15px;}
+    .select_opt p{width:26px; height:26px; margin-top:6px; background:url(/images/arr.gif) no-repeat;
+        cursor:pointer; text-indent:-999em}
+    .select_opt p#toright{background-position:2px 0}
+    .select_opt p#toleft{background-position:2px -22px}
+</style>
+
+<div class="login-form"  style="width:800px;">
+    <h2>创建新主题</h2>
+    <div class="aui-message error" style="display:none" id="createError">
+        <p class="title">
+            <span class="aui-icon icon-error"></span>
+            <strong id="createErrorMsg">操作失败</strong>
+        </p>
+        <p>创建主题失败</p>
+    </div>
+
+<form class="aui" style="width:800px;" id="resNewForm" method="post" action="/admin/subject">
+     <input  type="hidden" id="appCode" name="appCode" value="<%=subject.appCode%>">
+      <input  type="hidden" name="code" value="<%=subject.code%>">
+    <div class="field-group">
+        <label for="name">主题名称 <span class="aui-icon icon-required">(required)</span></label>
+        <input class="text long-field" type="text" id="name" name="name" placeholder="" value="<%=subject.name%>">
+        <span class="aui-icon aui-icon-small aui-iconfont-success" style="display:none">Success</span>
+        <span class="aui-icon aui-icon-small aui-iconfont-warning" style="display:none">Warning</span>
+        <span class="aui-icon aui-icon-wait" style="display:none">Wait</span>
+        <div class="error invalid" verify="true" style="display:none">该主题名称已经存在</div>
+        <div class="error invalid" validation="isNotBlank" style="display:none">请输入主题名称</div>
+    </div>
+
+    <div class="field-group">
+        <label for="appName">所属应用<span class="aui-icon icon-required"></span></label>
+        <input class="text long-field" type="text" disabled
+               id="appName" name="appName" placeholder="" value="<%=subject.appName%>">
+    </div>
+
+    <div class="buttons-container">
+       <span id="saveBtn"> <a href="javascript:void(0)" class="aui-button aui-button-primary">保存</a></span>  <span id="cancelBtn"> <a href="#admin/subject/list" class="aui-button aui-button-primary">取消</a></span>
+    </div>
+</form>
+</div>

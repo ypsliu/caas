@@ -1,0 +1,62 @@
+<!--heading-->
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>资源列表</h1>
+        </div>
+    </div>
+</div>
+<!--search panel-->
+<div id="sp-table" style="margin-top:30px;">
+    <form class="aui">
+        <fieldset>
+            <div class="field-group-1">
+                <label for="d-fname">资源名称</label>
+                <input class="text long-field" type="text" id="name" name="resname" role="condition">
+            </div>
+            <div class="field-group-1">
+                <label for="d-fname">资源标识</label>
+                <input class="text long-field" type="text" id="identifier" name="identifier" role="condition">
+            </div>
+            <div class="field-group-1">
+                <input class="button submit" type="button" value="查询" role="search" />
+            </div>
+        </fieldset>
+    </form>
+
+<!--Number Panel-->
+<div class="pagination-info">
+    第<span></span>条，共<span></span>条
+</div>
+<!--table-->
+<table class="aui aui-table-sortable" style="display:none">
+    <thead>
+    <tr>
+        <th></th>
+        <th>资源名称</th>
+        <th>标识</th>
+        <th>所属应用</th>
+      <!--  <th>&nbsp;</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <% _.each(resources, function(res, i) { %>
+    <tr id="row_<%=res.code%>">
+        <td><input type="checkbox" id="res_<%=res.code%>"></td>
+        <td condition="resname"><%=res.name%></td>
+        <td condition="identifier"><%=res.identifier%></td>
+        <td><%=res.appName%></td>
+      <!--  <td> <a class="aui-button" href="#admin/resource/update/<%=res.code%>">修改</a></td>-->
+    </tr>
+    <% }) %>
+    </tbody>
+</table>
+<!---pagination-->
+<div class="pagination">
+    <ul></ul>
+</div>
+</div>
+<!---button field-->
+<div>
+    <!--a class="aui-button aui-button-primary" href="#admin/resource/add">添加资源</a-->  &nbsp;&nbsp;<!--a class="aui-button aui-button-primary" href="javascript:void(0)" id="delBtn">删除资源</a-->
+</div>

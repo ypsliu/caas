@@ -1,0 +1,1 @@
+ALTER TABLE caas_app ADD backUrl varchar(150) AFTER `checkResource`;

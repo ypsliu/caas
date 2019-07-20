@@ -1,0 +1,58 @@
+<!--heading-->
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>主题列表</h1>
+        </div>
+    </div>
+</div>
+
+<!--search panel-->
+<div id="sp-table" style="margin-top:30px;">
+    <form class="aui">
+        <fieldset>
+            <div class="field-group-1">
+                <label for="d-fname">主题名称</label>
+                <input class="text long-field" type="text" id="name" name="name" role="condition">
+            </div>
+            <div class="field-group-1">
+                <input class="button submit" type="button" value="查询" role="search" />
+            </div>
+        </fieldset>
+    </form>
+
+    <!--Number Panel-->
+    <div class="pagination-info">
+        第<span></span>条，共<span></span>条
+    </div>
+
+
+    <!--table-->
+    <table class="aui aui-table-sortable" style="display:none">
+        <thead>
+        <tr>
+            <th>主题code</th>
+            <th>主题名称</th>
+            <!--th>&nbsp;</th-->
+        </tr>
+        </thead>
+        <tbody>
+        <% _.each(subjects, function(subject, i) { %>
+        <tr id="row_<%=subject.code%>">
+            <td><%=subject.code%></td>
+            <td condition="name"><%=subject.name%></td>
+            <!--td><a class="aui-button" href="#admin/subject/update/<%=subject.code%>">修改</a></td-->
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+
+    <!---pagination-->
+    <div class="pagination">
+        <ul></ul>
+    </div>
+</div>
+<!---button field-->
+<div>
+    <!--a class="aui-button aui-button-primary" href="#admin/subject/add">添加主题</a>  &nbsp;&nbsp;<a class="aui-button aui-button-primary" href="javascript:void(0)" id="delBtn">删除主题</a-->
+</div>

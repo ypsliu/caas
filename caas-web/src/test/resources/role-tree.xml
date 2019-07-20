@@ -1,0 +1,49 @@
+<svg class="" role="canvas" width="1000" height="500">
+    <svg id="node-2" x="50" y="334" root="true">
+        <rect role="node" x="105" y="12" width="12" height="12" expanded="true" />
+        <path role="branch" stroke-dasharray="3,3" d="M 117 17 L 147 17" />
+    </svg>
+    <svg branch="v" h-id="node-2">
+        <path style="stroke: #999; stroke-width: 1;" stroke-dasharray="3,3" d="M 197 351 L 197 351" />
+    </svg>
+    <svg id="node-1480644031321" x="197" y="334" code="1" parent-id="node-2" top="true" bottom="true"
+        parent="0">
+        <path role="branch" stroke-dasharray="3,3" d="M 0 17 L 30 17" />
+        <path role="branch" stroke-dasharray="3,3" d="M 42 17 L 177 17" expanded="true" />
+        <rect role="node" x="30" y="12" width="12" height="12" expanded="true" />
+    </svg>
+    <svg branch="v" h-id="node-1480644031321">
+        <path style="stroke: #999; stroke-width: 1;" stroke-dasharray="3,3" d="M 376 99 L 376 351" />
+    </svg>
+    <svg id="node-1480644422791" x="376" y="334" code="2" parent-id="node-1480644031321" bottom="true"
+        parent="1">
+        <path role="branch" stroke-dasharray="3,3" d="M 0 17 L 30 17" />
+        <path role="branch" stroke-dasharray="3,3" d="M 42 17 L 177 17" expanded="false" />
+        <rect role="node" x="30" y="12" width="12" height="12" expanded="true" />
+    </svg>
+    <svg id="node-1480644425480" x="376" y="82" code="3" parent-id="node-1480644031321" top="true"
+        parent="1">
+        <path role="branch" stroke-dasharray="3,3" d="M 0 17 L 30 17" />
+        <path role="branch" stroke-dasharray="3,3" d="M 42 17 L 177 17" expanded="true" />
+        <rect role="node" x="30" y="12" width="12" height="12" expanded="true" />
+    </svg>
+    <svg branch="v" h-id="node-1480644425480">
+        <path style="stroke: #999; stroke-width: 1;" stroke-dasharray="3,3" d="M 555 99 L 555 99" />
+    </svg>
+    <svg id="node-1480644657366" x="376" y="166" code="5" parent-id="node-1480644031321" parent="1">
+        <path role="branch" stroke-dasharray="3,3" d="M 0 17 L 30 17" />
+        <path role="branch" stroke-dasharray="3,3" d="M 42 17 L 177 17" expanded="false" />
+        <rect role="node" x="30" y="12" width="12" height="12" expanded="true" />
+    </svg>
+    <svg id="node-1480644978734" x="376" y="250" code="6" parent-id="node-1480644031321" parent="1">
+        <path role="branch" stroke-dasharray="3,3" d="M 0 17 L 30 17" />
+        <path role="branch" stroke-dasharray="3,3" d="M 42 17 L 177 17" expanded="false" />
+        <rect role="node" x="30" y="12" width="12" height="12" expanded="true" />
+    </svg>
+    <svg id="node-1480645009804" x="555" y="82" code="role-1480645009804" parent-id="node-1480644425480"
+        top="true" bottom="true" parent="3">
+        <path role="branch" stroke-dasharray="3,3" d="M 0 17 L 30 17" />
+        <path role="branch" stroke-dasharray="3,3" d="M 42 17 L 177 17" expanded="false" />
+        <rect role="node" x="30" y="12" width="12" height="12" expanded="true" />
+    </svg>
+</svg>

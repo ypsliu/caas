@@ -1,0 +1,150 @@
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>用户访问日志</h1>
+        </div>
+    </div>
+</div>
+<div style="margin-top:30px;">
+    <form class="aui">
+        <fieldset>
+            <div class="field-group-2">
+                <label for="d-fname">user_code：</label>
+                <input class="text" type="text" name="userCode" />
+            </div>
+             <div class="field-group-2">
+                <label for="d-fname">app：</label>
+            <label for="d-fname"><%=app.appName%></label>
+
+             
+            <input type="hidden" name="appCode"  value="<%=app.appCode%>" />
+            <div class="field-group-1">
+                <label for="d-fname">资源：</label>
+                <input class="text" type="text" name="resource" />
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="field-group-1">
+                <label for="d-fname">花费时间：</label>
+                <input class="text" type="text" name="minTimeInMs" style="width:100px;" />
+                ~
+                <input class="text" type="text" name="maxTimeInMs" style="width:100px;" />
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="field-group-2">
+                <label for="d-fname">参数关键字：</label>
+                <input class="text" type="text" name="paramsKeyword" />
+            </div>
+            <div class="field-group-2">
+                <label for="d-fname">结果关键字：</label>
+                <input class="text" type="text" name="resultKeyword" />
+            </div>
+            <div class="field-group-2">
+                <label for="d-fname">异常关键字：</label>
+                <input class="text" type="text" name="exceptionKeyword" />
+            </div>
+            <div class="field-group-3">
+                <input class="button submit" type="button" value="查询" id="search" />
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="field-group-1" style="width:800px;">
+                <label for="d-fname" class="fl">起至时间：</label>
+                <input class="fl text" type="text" name="fromTime" role="datatime-picker" style="width:100px;" />
+                <span class="fl">&nbsp;~&nbsp;</span>
+                <input class="fl text" type="text" name="toTime" role="datatime-picker" style="width:100px;" />
+            </div>
+        </fieldset>
+    </form>
+    <div class="pagination-info">
+        <%
+        var total = result.total;
+        var from = (result.pageNo - 1) * result.pageSize + 1;
+        var to = from + result.pageSize - 1;
+        if(to > total) {
+        to = total;
+        }
+        %>
+        第<span><%=from%>-<%=to%></span>条，共<span><%=total%></span>条
+    </div>
+    <table class="aui aui-table-sortable">
+        <thead>
+        <tr>
+            <th class="aui-table-column-issue-key">#</th>
+            <th>user_code</th>
+            <th>app_code</th>
+            <th>auth_code</th>
+            <th>access_token</th>
+            <th>请求资源</th>
+            <th>请求方法</th>
+            <th>参数</th>
+            <th>结果</th>
+            <th>成功与否</th>
+            <th>异常</th>
+            <th>花费时间（ms）</th>
+            <th>请求时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% _.each(result.records, function(log, i) { %>
+        <tr>
+            <td><%=i + 1%></td>
+            <td><%=log.userCode%></td>
+            <td><%=log.appCode%></td>
+            <td><% if(log.authCode) { %><a href="javascript:void(0)" data-detail='<%=log.authCode%>'>auth_code</a><% } %></td>
+            <td><% if(log.accessToken) { %><a href="javascript:void(0)" data-detail='<%=log.accessToken%>'>accessToken</a><% } %></td>
+            <td><%=log.resource%></td>
+            <td><%=log.method%></td>
+            <td><% if(log.params) { %><a href="javascript:void(0)" data-detail='<%=log.params%>'>参数</a><% } %></td>
+            <td><% if(log.result) { %><a href="javascript:void(0)" data-detail='<%=log.result%>'>结果</a><% } %></td>
+            <td><%=log.success ? "成功" : "失败"%></td>
+            <td><% if(log.exception) { %><a href="javascript:void(0)" data-detail='<%=log.exception%>'>异常</a><% } %></td>
+            <td><%=log.timeInMs%></td>
+            <td><%=_.formatDateTime(new Date(log.timestamp))%></td>
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+    <%
+        var count = Math.ceil(total / result.pageSize);
+
+        var current = result.pageNo - 1;
+        var start = current - 5;
+        var end = current + 4;
+
+        if(start < 0) {
+            start = 0;
+            end = 9;
+            if(end > count - 1) {
+                end = count - 1;
+            }
+        } else if(end > count - 1) {
+            end = count - 1;
+            start = end - 9;
+            if(start < 0) {
+                start = 0;
+            }
+        }
+
+        if(start < 0) {
+            start = 0;
+        }
+        if(end > count - 1) {
+            end = count - 1;
+        }
+    %>
+    <div class="pagination">
+        <ul>
+        <% if(result.pageNo > 1) { %>
+            <li class="prev" data="<%=result.pageNo - 1%>"><a href="javascript:void(0)">上一页</a></li>
+        <% } %>
+        <% for(var i = start;i <= end;i ++) { %>
+            <li<% if(i === result.pageNo - 1) { %> class="inactive"<% } %> data="<%=i + 1%>"><a href="javascript:void(0)"><%=i + 1%></a></li>
+        <% } %>
+        <% if(result.pageNo < count) { %>
+            <li class="next" data="<%=result.pageNo + 1%>"><a href="javascript:void(0)">下一页</a></li>
+        <% } %>
+        </ul>
+    </div>
+</div>

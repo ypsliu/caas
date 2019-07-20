@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.rongcapital.caas.dao.AdminUserDao">
+
+	<!-- 所有查询列 -->
+	<sql id="QUERY_COLUMN_LIST">
+		<![CDATA[ code as code,name as name,password as password,email as email,superUser as superUser,userType as userType,appCode as appCode,creationTime as creationTime,updateTime as updateTime,comment as comment,creationUser as creationUser,updateUser as updateUser,version as version,enabled as enabled, removed as removed]]>
+	</sql>
+	<!-- 智能排序与分页 -->
+	<sql id="QUERY_ORDER_LIMIT_CONDTION">
+		<if test="orderField != null and orderFieldType != null"><![CDATA[ORDER BY ${orderField} ${orderFieldType}]]></if>
+		<if
+			test="startIndex != null and startIndex &gt;= 0 and pageSize != null and pageSize &gt; 0"><![CDATA[LIMIT #{startIndex},#{pageSize}]]></if>
+	</sql>
+	<!-- 查询列来源表 -->
+	<sql id="QUERY_FROM_TABLE"><![CDATA[FROM caas_admin_user]]></sql>
+	<!-- 更新列来源表 -->
+	<sql id="UPDATE_FROM_TABLE"><![CDATA[UPDATE caas_admin_user]]></sql>
+	<!-- 全部条件 -->
+	<sql id="QUERY_WHERE_CLAUSE">
+		<where>
+			<if test="code != null"><![CDATA[ AND code = #{code}]]></if>
+			<if test="name != null"><![CDATA[ AND name = #{name}]]></if>
+			<if test="password != null"><![CDATA[ AND password = #{password}]]></if>
+			<if test="email != null"><![CDATA[ AND email = #{email}]]></if>
+			<if test="superUser != null"><![CDATA[ AND superUser = #{superUser}]]></if>
+			<if test="appCode != null"><![CDATA[ AND appCode = #{appCode}]]></if>
+			<if test="creationTime != null"><![CDATA[ AND creationTime = #{creationTime}]]></if>
+			<if test="updateTime != null"><![CDATA[ AND updateTime = #{updateTime}]]></if>
+			<if test="comment != null"><![CDATA[ AND comment = #{comment}]]></if>
+			<if test="creationUser != null"><![CDATA[ AND creationUser = #{creationUser}]]></if>
+			<if test="updateUser != null"><![CDATA[ AND updateUser = #{updateUser}]]></if>
+			<if test="version != null"><![CDATA[ AND version = #{version}]]></if>
+			<if test="enabled != null"><![CDATA[ AND enabled = #{enabled}]]></if>
+			<if test="removed != null"><![CDATA[ AND removed = #{removed}]]></if>
+		</where>
+	</sql>
+
+
+
+	<!-- 插入action记录 -->
+	<insert id="insert" parameterType="cn.rongcapital.caas.po.AdminUser">
+		INSERT INTO caas_admin_user
+		(name,password,email,superUser,userType,appCode,creationTime,updateTime,comment,creationUser,updateUser,enabled,removed)
+		VALUES
+		(
+		#{name},
+		#{password},
+		#{email},
+		#{superUser},
+        #{userType},
+		#{appCode},
+		#{creationTime},
+		#{updateTime},
+		#{comment},
+		#{creationUser},
+		#{updateUser},
+		#{enabled},
+		#{removed}
+		)
+		<selectKey resultType="java.lang.String" keyProperty="code">
+			SELECT
+			LAST_INSERT_ID() as code
+		</selectKey>
+	</insert>
+
+	<!--查询记录通过主键 -->
+	<select id="getByCode" parameterType="string"
+		resultType="cn.rongcapital.caas.po.AdminUser">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+	   <![CDATA[WHERE code = #{code} and removed !='1']]>
+	</select>
+	<!--查询所有 -->
+	<select id="getAll" resultType="cn.rongcapital.caas.po.AdminUser">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where removed !='1'
+	</select>
+	<!-- 软删除记录通过主键 -->
+	<update id="removeByCode" parameterType="cn.rongcapital.caas.po.AdminUser">
+		<include refid="UPDATE_FROM_TABLE" />
+		SET removed='1' ,
+		updateTime = #{updateTime},
+		updateUser =#{updateUser},
+		version =version+1
+		<![CDATA[WHERE code = #{code}]]>
+		and version=#{version}
+	</update>
+
+
+
+
+	<!-- 其它SQL语句 -->
+
+	<update id="enableAdminUser" parameterType="cn.rongcapital.caas.po.AdminUser">
+		<include refid="UPDATE_FROM_TABLE" />
+		set enabled='1',
+		updateTime = #{updateTime},
+		updateUser =#{updateUser},
+		version =version+1
+		where code=#{code} and version=#{version}
+	</update>
+
+	<update id="disableAdminUser" parameterType="cn.rongcapital.caas.po.AdminUser">
+		<include refid="UPDATE_FROM_TABLE" />
+		set enabled='0',
+		updateTime = #{updateTime},
+		updateUser =#{updateUser},
+		version =version+1
+		where code=#{code} and version=#{version}
+	</update>
+
+
+	<select id="getAppAdminUsers" parameterType="java.lang.String"
+		resultType="cn.rongcapital.caas.po.AdminUser">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where appCode=#{appCode} and removed!='1'
+	</select>
+
+	<update id="changeAdminUserPassword" parameterType="cn.rongcapital.caas.po.AdminUser">
+		<include refid="UPDATE_FROM_TABLE" />
+		set password=#{password} ,
+		updateTime = #{updateTime},
+		updateUser=#{updateUser},
+		version =version+1
+		where code=#{code} and
+		version=#{version}
+	</update>
+
+	<update id="updateAdminUser" parameterType="cn.rongcapital.caas.po.AdminUser">
+		<include refid="UPDATE_FROM_TABLE" />
+		set name=#{name} ,comment=#{comment},
+		updateTime = #{updateTime},
+		updateUser=#{updateUser},
+		appCode = #{appCode},
+		version =version+1
+		where
+		code=#{code} and version=#{version}
+	</update>
+
+
+
+	<select id="getAdminUserByEmail" parameterType="java.lang.String"
+		resultType="cn.rongcapital.caas.po.AdminUser">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where email=#{email} and removed!='1'
+	</select>
+	<select id="getAdminUserByName" parameterType="java.lang.String"
+		resultType="cn.rongcapital.caas.po.AdminUser">
+		select
+		<include refid="QUERY_COLUMN_LIST" />
+		<include refid="QUERY_FROM_TABLE" />
+		where name=#{name} and removed!='1'
+	</select>
+
+	<update id="updateAdminApp" parameterType="cn.rongcapital.caas.po.AdminUser">
+		<include refid="UPDATE_FROM_TABLE" />
+		SET appCode=#{appCode},
+		updateTime = #{updateTime},
+		updateUser=#{updateUser},
+		version =version+1
+		where code=#{code} and
+		version=#{version}
+	</update>
+
+	<select id="getAppsByAdmin" parameterType="java.lang.String" resultType="cn.rongcapital.caas.po.AdminUser">
+		SELECT app.* FROM cass.caas_app app , caas_app_admin aa
+		where app.code=aa.appCode
+		and aa.adminCode=#{adminCode}
+	</select>
+
+</mapper>

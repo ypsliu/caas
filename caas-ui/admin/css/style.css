@@ -1,0 +1,472 @@
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+.pt-5 {
+	padding-top: 5px;
+}
+
+.mt-10 {
+	margin-top: 10px;
+}
+
+span.logo {
+	display: inline-block;
+	margin-top: 10px;
+}
+
+#footer-logo a {
+    height: 30px;
+}
+
+#footer .footer-body, #footer-logo a {
+	background: url('/images/logo_02.png') center bottom no-repeat;
+    background-size: 114px 30px;
+}
+
+#footer .footer-body, #footer-logo a:hover, #footer .footer-body, #footer-logo a:focus {
+	background: url('/images/logo_02.png') center bottom no-repeat;
+    background-size: 114px 30px;
+}
+
+.message-panel {
+	width: 500px;
+    margin: 50px auto;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-radius: 2px;
+}
+
+.message-panel .aui-page-panel-content {
+	width: 100%;
+}
+
+div.login-form {
+	padding: 40px;
+	width: 500px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin: 50px auto;
+	background-color: #fff;
+}
+
+.dashboard-panel-area {
+	width: 45%;
+	padding: 0 20px;
+	float: left;
+}
+
+.panel-1 {
+	margin-top: 20px;
+	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+.panel-1 .header {
+	background-color: #3b73af;
+	color: #fff;
+}
+
+.panel-1 .header h3 {
+	line-height: 28px;
+	margin-left: 20px;
+	font-size: 14px;
+}
+
+.panel-1 .body {
+	margin: 30px;
+}
+
+div.change-password-form {
+	margin: 40px auto;
+    width: 700px;
+}
+
+.profile-form {
+	margin: 40px auto!important;
+    width: 700px;
+}
+
+fieldset {
+	overflow: hidden;
+}
+
+fieldset div.field-group-1 {
+	margin-top: 10px;
+	width: 300px;
+	float: left;
+}
+
+fieldset div.field-group-1 input.text {
+	width: 220px;
+}
+
+fieldset div.field-group-2 {
+	margin-top: 10px;
+	width: 260px;
+	float: left;
+}
+
+fieldset div.field-group-2 input.text {
+	width: 120px;
+}
+
+fieldset div.field-group-3 {
+	margin-top: 10px;
+	width: 50px;
+	float: left;
+}
+
+div.pagination-info {
+	margin-top: 30px;
+}
+
+div.pagination {
+	width: 100%;
+	margin-top: 20px;
+	text-align: center;
+}
+
+div.pagination ul {
+	margin: 0 auto;
+	overflow: hidden;
+	display: inline-block;
+}
+
+div.pagination ul li {
+	line-height: 30px;
+	list-style: none;
+	float: left;
+	width: 30px;
+	text-align: center;
+}
+
+div.pagination ul li.prev, div.pagination ul li.next {
+	width: 80px;
+}
+
+div.pagination ul li.inactive a {
+	color: #333;
+	pointer-events: none;
+}
+
+ul.datetime-picker {
+	display: inline;
+	overflow: hidden;
+}
+
+ul.datetime-picker li {
+	float: left;
+	list-style: none;
+	margin-left: 10px;
+}
+
+div.aui-inline-dialog div.contents {
+	max-height: 400px;
+    overflow: scroll;
+    max-width: 700px;
+}
+
+/* roles tree */
+div.user-role-apply {
+	margin: 50px;
+}
+
+div.user-role-apply h1 {
+	text-align: center;
+}
+
+div.user-role-apply hr {
+	border: none;
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+div.user-role-apply div.func {
+	width: 100%;
+	margin-top: 30px;
+	text-align: center;
+}
+
+div.user-role-apply div.func div {
+	margin: 0 auto;
+}
+
+div.user-role-apply a#fold-btn {
+	display: none;
+}
+
+div.user-role-apply a.unfold:before {
+	content: '全部收起';
+}
+
+div.user-role-apply a.fold:before {
+	content: '全部展开';
+}
+
+div#tree {
+	border: 1px dashed #eee;
+    padding-top: 20px;
+}
+
+ul.roles-tree {
+	min-height: 300px;
+	overflow: hidden;
+}
+
+ul.roles-tree ul {
+	margin-top: 0px;
+	padding-left: 22px;
+	border-left: 1px dotted #ccc;
+}
+
+ul.roles-tree li {
+	list-style: none;
+}
+
+ul.roles-tree li div {
+	line-height: 23px;
+}
+
+ul.roles-tree li div a {
+	color: #333;
+}
+
+ul.roles-tree li div a:hover,
+ul.roles-tree li div a:focus {
+	text-decoration: none;
+}
+
+ul.roles-tree li div .unfold,
+ul.roles-tree li div .fold {
+	display: inline-block;
+	width: 11px;
+	height: 11px;
+	vertical-align: middle;
+	position: relative;
+	left: -5px;
+}
+ul.roles-tree li div .unfold {
+	background-color: #fff;
+	background: url('../images/icon-unfold.png');
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+}
+ul.roles-tree li div .fold {
+	background-color: #fff;
+	background: url('../images/icon-fold.png');
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+}
+
+ul.roles-tree li div .unfold:before {
+	content: '';
+}
+
+ul.roles-tree li div .fold:before {
+	content: '';
+}
+
+ul.roles-tree li div span.line {
+	display: inline-block;
+	width: 10px;
+	height: 13px;
+	border: none;
+	vertical-align: middle;
+	position: relative;
+    left: -1px;
+    background-color: #fff;
+    border-top: 1px dotted #ccc;
+    top: 6px;
+    border-left: 1px dotted #ccc;
+}
+
+ul.roles-tree li div label {
+	margin-left: 4px;
+}
+
+ul.roles-tree li div label input[type='checkbox'] {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+    margin: 0;
+    vertical-align: middle;
+    -webkit-appearance: none;
+    appearance: none;
+    border: 1px solid #666;
+    outline: none;
+}
+
+ul.roles-tree li div label input[type='checkbox'][disabled] {
+	border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+ul.roles-tree li div label input[type='checkbox']:checked:after {
+	content: "\e005";
+	font-family: "Atlassian Icons";
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    position: relative;
+    top: -2px;
+}
+
+ul.roles-tree li div label input[type='checkbox'][disabled]:checked:after {
+	color: rgba(0,0,0,0.3);
+}
+
+ul.roles-tree li div label span {
+	vertical-align: middle;
+}
+
+ul.roles-tree li div {
+	border-left: 1px dotted #ccc;
+}
+
+ul.roles-tree > li > div {
+	border-left: none;
+}
+
+ul.roles-tree ul > li:last-child > div > span.line {
+	border-left: 1px solid #fff;
+}
+
+ul.roles-tree > li:last-child ul {
+	border-left: none;
+}
+
+ul.roles-tree li div .unfold span.line,
+ul.roles-tree li div .fold span.line {
+	display: inline-block;
+	width: 5px;
+	height: 9px;
+	vertical-align: middle;
+	position: absolute;
+	left: 11px;
+	top: 4px;
+	background-color: rgba(255, 255, 255, 0);
+	border: none;
+	border-top: 1px dotted #ccc;
+}
+
+ul.roles-tree > li > div {
+    border-left: 1px dotted #ccc;
+}
+
+ul.roles-tree > li:first-child > div {
+	border-left: none;
+}
+
+ul.roles-tree > li:last-child > div > span.line {
+    border-left: none;
+}
+
+ul.roles-tree > li:first-child > div > span.line {
+	left: 0;
+}
+/* roles tree */
+
+/* ipa user search */
+.search-ipa-user {
+	margin: 40px;
+}
+
+.search-ipa-user div.table {
+	min-height: 300px;
+}
+
+.search-ipa-user div.func {
+	width: 100%;
+	margin-top: 30px;
+	text-align: center;
+}
+
+.search-ipa-user div.func div {
+	margin: 0 auto;
+}
+/* ipa user search */
+
+/* dialog func */
+.dialog-func {
+	overflow: auto;
+}
+/* dialog func */
+
+/* app select */
+.app-select {
+	margin: 40px;
+}
+
+.app-select div.content {
+	margin-top: 30px;
+	overflow: hidden;
+}
+
+.app-select div.content > div {
+	float: left;
+	width: 40%;
+}
+
+.app-select div.content > div h2 {
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
+
+.app-select div.content > div div.table {
+	width: 100%;
+	min-height: 200px;
+	max-height: 400px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.app-select div.content > div.select {
+	width: 20%;
+	height: 200px;
+}
+
+.app-select div.content > div.select {
+	margin-top: 80px;
+	text-align: center;
+}
+
+.app-select div.content > div.select > div {
+	margin: 0 auto;
+	width: 40px;
+}
+
+.app-select div.content > div.select .arrow-right {
+	background-image: url('/images/arrow_right.png');
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	width: 64px;
+	height: 64px;
+	display: inline-block;
+}
+
+.app-select div.content > div.select .arrow-left {
+	background-image: url('/images/arrow_left.png');
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	width: 64px;
+	height: 64px;
+	display: inline-block;
+}
+
+.app-select  div.func {
+	width: 100%;
+	margin-top: 30px;
+	text-align: center;
+}
+
+.app-select div.func div {
+	margin: 0 auto;
+}
+
+/* app select */

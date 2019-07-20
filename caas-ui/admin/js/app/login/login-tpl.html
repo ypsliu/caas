@@ -1,0 +1,42 @@
+<div class="login-form" style="width:600px">
+    <h2>欢迎使用CAAS管理控制台</h2>
+    <div class="aui-message error" style="display: none" id="loginError">
+        <p class="title"><strong>登录失败</strong></p>
+        <p>抱歉，用户名或密码错误，请重试！</p>
+    </div>
+    <div>
+        <form action="/admin/login" method="post" class="aui" name="login" id="loginform">
+            <fieldset>
+                <div>
+                    <div class="field-group"><label for="d-fname">邮箱：</label>
+                        <input class="text" type="text" name="email" title="email" placeholder="请输入邮箱">
+                        <div class="error invalid" validation="isNotBlank" style="display: none">请输入邮箱</div>
+                        <div class="error invalid" validation="isEmail" style="display:none">请输入正确邮箱</div>
+                    </div>
+                    <div class="field-group"><label for="d-fname">密码：</label>
+                        <input class="text" type="password" name="password" title="password" placeholder="请输入密码">
+                        <div class="error invalid" validation="isNotBlank" style="display: none">请输入密码</div>
+                    </div>
+                    <div class="field-group">
+                        <input type="hidden" name="superAdmin" id="isSuperAdmin">
+                        <a href="#admindropdown" aria-owns="admindropdown" aria-haspopup="true" class="aui-button aui-dropdown2-trigger aui-style-default" aria-controls="admindropdown"><span id="admintypeval">请选择管理员类型</span></a>
+                        <div id="admindropdown" class="aui-dropdown2 aui-style-default" data-dropdown2-alignment="left" aria-hidden="false" style="display: block; left: 281px; top: 630px; min-width: 160px;">
+                            <ul class="aui-list-truncate">
+                                <li><a href="javascript:void(0)" class="admintype">管理员</a></li>
+                                <li><a href="javascript:void(0)" class="admintype">超级管理员</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="domain-panel" class="field-group"><input style="vertical-align: middle;" type="checkbox" id="domainUser" name="checkByDomain" value=true> 通过域登录 </div>
+                    <div class="field-group">
+                        <p>还没有账号？ 要申请, 请联系 <a href="#">CAAS</a> 管理员.</p>
+                    </div>
+                    <div class="field-group"><input class="button submit" type="button" value="登录" id="login"></div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <input type="hidden" name="enableipa" id="enableipa" value="">
+
+</div>

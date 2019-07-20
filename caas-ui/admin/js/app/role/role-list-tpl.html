@@ -1,0 +1,63 @@
+<!--heading-->
+<div class="aui-page-header">
+    <div class="aui-page-header-inner">
+        <div class="aui-page-header-main">
+            <h1>角色列表</h1>
+        </div>
+    </div>
+</div>
+
+<!--search panel-->
+<div id="sp-table" style="margin-top:30px;">
+    <form class="aui">
+        <fieldset>
+            <div class="field-group-1">
+                <label for="d-fname">角色名称</label>
+                <input class="text long-field" type="text" id="name" name="name" role="condition">
+            </div>
+            <div class="field-group-1">
+                <input class="button submit" type="button" value="查询" role="search" />
+            </div>
+        </fieldset>
+    </form>
+
+    <!--Number Panel-->
+    <div class="pagination-info">
+        第<span></span>条，共<span></span>条
+    </div>
+
+
+    <!--table-->
+    <table class="aui aui-table-sortable" style="display:none">
+        <thead>
+        <tr>
+            <th></th>
+            <th>角色名称</th>
+            <th>角色类型</th>
+            <th>待审批的用户</th>
+            <!--th>&nbsp;</th-->
+        </tr>
+        </thead>
+        <tbody>
+        <% _.each(roles, function(role, i) { %>
+        <tr id="row_<%=role.code%>">
+            <td><input type="checkbox" id="role_<%=role.code%>"></td>
+            <td condition="name"><%=role.name%></td>
+            <td><% if(role.roleType == 'PUBLIC'){%>自动申请<%}%><% if(role.roleType == 'PROTECTED'){%>管理员审批<%}%><% if(role.roleType == 'PRIVATE'){%>不允许申请<%}%></td>
+            <td><span class="applyusers" code="<%=role.code%>" name="<%=role.name%>"><a class="aui-button" href="javascript:void(0)">查看</a> </span></td>
+            <!--td><a class="aui-button" href="#admin/role/update/<%=role.code%>">修改</a></td-->
+        </tr>
+        <% }) %>
+        </tbody>
+    </table>
+
+    <!---pagination-->
+    <div class="pagination">
+        <ul></ul>
+    </div>
+</div>
+<!---button field-->
+<div>
+    <!--a class="aui-button aui-button-primary" href="#admin/role/add">添加角色</a-->  &nbsp;&nbsp;<!--a class="aui-button aui-button-primary" href="javascript:void(0)" id="delBtn">删除角色</a-->
+    <a class="aui-button aui-button-primary" href="javascript:void(0)" id="advance">高级功能</a>
+</div>
