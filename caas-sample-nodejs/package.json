@@ -31,7 +31,7 @@
     "formidable": "^1.0.16",
     "hashmap": "^2.0.1",
     "http-proxy-agent": "^1.0.0",
-    "https-proxy-agent": "^1.0.0",
+    "https-proxy-agent": "^5.0.0",
     "mongodb": "^2.1.7",
     "mysql": "^2.11.1",
     "ncp": "^2.0.0",
