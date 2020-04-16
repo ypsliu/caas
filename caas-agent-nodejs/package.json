@@ -19,6 +19,6 @@
   "dependencies": {
     "async": "^2.0.1",
     "http-proxy-agent": "^1.0.0",
-    "https-proxy-agent": "^1.0.0"
+    "https-proxy-agent": "^5.0.0"
   }
 }
