@@ -32,7 +32,7 @@
     "hashmap": "^2.0.1",
     "http-proxy-agent": "^1.0.0",
     "https-proxy-agent": "^1.0.0",
-    "mongodb": "^2.1.7",
+    "mongodb": "^3.6.1",
     "mysql": "^2.11.1",
     "ncp": "^2.0.0",
     "node-rsa": "^0.3.2",
