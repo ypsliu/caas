@@ -9,7 +9,7 @@
 	<properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <resteasy.version>3.0.11.Final</resteasy.version>
+        <resteasy.version>4.5.7.Final</resteasy.version>
     </properties>
     
     <dependencies>
